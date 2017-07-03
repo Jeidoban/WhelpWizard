@@ -8,8 +8,8 @@
             FontSize="30" 
         />
         <StackLayout Orientation="Horizontal">
-            <Button Text="List of Dams" HorizontalOptions="Start" Margin="20, 20, 0, 10"/>
-            <Button Text="Calculator" HorizontalOptions="EndAndExpand" Margin="0, 20, 20, 10"/>
+            <Button Text="List of Dams" HorizontalOptions="Start" Margin="20, 20, 0, 10" Clicked="GoToListOfDams"/>
+            <Button Text="Calculator" HorizontalOptions="EndAndExpand" Margin="0, 20, 20, 10" Clicked="GoToCalculator"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

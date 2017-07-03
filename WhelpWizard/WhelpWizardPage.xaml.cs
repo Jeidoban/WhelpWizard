@@ -8,5 +8,15 @@ namespace WhelpWizard
         {
             InitializeComponent();
         }
+
+        void GoToCalculator(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new Calculator());
+        }
+
+        void GoToListOfDams(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new ListOfDams());
+        }
     }
 }
