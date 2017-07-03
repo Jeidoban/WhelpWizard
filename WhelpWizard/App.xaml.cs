@@ -8,7 +8,7 @@ namespace WhelpWizard
         {
             InitializeComponent();
 
-            MainPage = new WhelpWizardPage();
+            MainPage = new NavigationPage(new WhelpWizardPage());
         }
 
         protected override void OnStart()
