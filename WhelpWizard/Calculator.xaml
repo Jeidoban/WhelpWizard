@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.Calculator">
-	<StackLayout Orientation="Vertical">
+	<StackLayout Orientation="Vertical" Margin="0, 20, 0, 0">
         <StackLayout Orientation="Vertical">
             <Label Text="Enter a name" HorizontalOptions="Center" />
-            <Entry HorizontalOptions="CenterAndExpand" WidthRequest="250"></Entry>
+            <Entry HorizontalOptions="CenterAndExpand" WidthRequest="250" x:Name="dogName"></Entry>
         </StackLayout>
         <StackLayout Orientation="Vertical">
             <Label Text="Select a date:" HorizontalOptions="Center" VerticalOptions="Center" />
-            <DatePicker HorizontalOptions="Center" x:Name="picker"></DatePicker>
+            <DatePicker HorizontalOptions="Center" x:Name="picker" DateSelected="Handle_DateSelected"></DatePicker>
+        </StackLayout>
+        <StackLayout>
+            <Label Text="Dam is Due: " HorizontalOptions="Center"/>
+            <Label HorizontalOptions="Center" x:Name="calculatedDate" FontAttributes="Bold"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand"></StackLayout>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Pregnancy Information:" Margin="20, 0, 0, 0"/>
+                <Stepper HorizontalOptions="EndAndExpand" Margin="0, 0, 20, 0"></Stepper>
+            </StackLayout>
+            <Editor Margin="10, 0, 0, 0" HorizontalOptions="Center"></Editor>
+        </StackLayout>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Margin="0, 0, 20, 5"></Button>
+            </StackLayout>
         </StackLayout>
     </StackLayout>
 </ContentPage>

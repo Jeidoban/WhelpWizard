@@ -51,6 +51,8 @@
     <Compile Include="ListOfDams.xaml.cs">
       <DependentUpon>ListOfDams.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CalculateDate.cs" />
+    <Compile Include="PregnancyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
