@@ -1,14 +1,15 @@
 ﻿using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace WhelpWizard
 {
     public partial class App : Application
     {
+        
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new WhelpWizardPage());
+            MainPage = new NavigationPage(new Calculator());
         }
 
         protected override void OnStart()
