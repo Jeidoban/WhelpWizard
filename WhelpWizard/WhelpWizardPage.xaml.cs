@@ -13,10 +13,5 @@ namespace WhelpWizard
         {
             Navigation.PushAsync(new Calculator());
         }
-
-        void GoToListOfDams(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new ListOfDams());
-        }
     }
 }

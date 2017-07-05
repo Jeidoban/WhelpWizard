@@ -1,6 +1,7 @@
 ﻿using System;
 namespace WhelpWizard
 {
+    // Holds pregnancy information.
     public class PregnancyInfo
     {
         public static string firstStage = "• Eggs are fertilized and aren't easily \n  affected by outside factors.\n" +

@@ -2,6 +2,7 @@
 
 namespace WhelpWizard
 {
+    // This class just holds dog information.
     public class Dog
     {
         public string DogName{ get; set; }
@@ -13,11 +14,6 @@ namespace WhelpWizard
             this.DogName = dogName;
             this.BreedingDate = breedingDate;
             this.DueDate = DogName + " is due " + CalculateDate.NumberOfDays(BreedingDate, 63);
-        }
-
-        public Dog()
-        {
-            
         }
     }
 }

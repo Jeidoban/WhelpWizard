@@ -1,21 +1,31 @@
-﻿using System;
+﻿/****************************************************
+ * This was created by Jade Westover for BreederZoo *
+ ****************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using PCLStorage;
 
 namespace WhelpWizard
 {
     public partial class Calculator : ContentPage
     {
-        string max;
-		public ListOfDams list;
-        Dog dog;
+        string max; // This makes the user doesn't enter a name more that 30 characters long.
+		public ListOfDams list; // This is the list of Dams page.
+        Dog dog; // Holds information on a dog.
+        SaveAndLoad saveLoad; // File writing and reading class.
+        ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
 
+        // I'm just initializing most of the XAML elemnts here.
         public Calculator()
         {
             InitializeComponent();
-            list = new ListOfDams();
+            saveLoad = new SaveAndLoad();
+            dogList = new ObservableCollection<Dog>();
+            list = new ListOfDams(PopulateList(dogList));
 			dogIsDue.Text = "Dam is Due: ";
             calculatedDate.Text = CalculateDate.NumberOfDays(picker.Date, 63);
             pregnancyInfo.Text = PregnancyInfo.firstStage;
@@ -25,6 +35,15 @@ namespace WhelpWizard
             stepper.Increment = 1;
         }
 
+        // Pretty much a shell function because it used to be an async method. I didn't feel like changing it after it worked lol.
+        public ObservableCollection<Dog> PopulateList(ObservableCollection<Dog> dog)
+        {
+            var thing = saveLoad.LoadFromfile(dog);
+            return thing.Result; // APPEND RESULT ON THE END OF TASKS TO GET THE ACTUAL OBJECT. God that took me way to long to figure out lol. 
+                                 // There goes 4 hours of my life >:(
+        }
+
+        // This fires when the date is changed in the picker.
         void Handle_DateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
         {
             calculatedDate.Text = CalculateDate.NumberOfDays(picker.Date, 63);
@@ -32,6 +51,8 @@ namespace WhelpWizard
             stepper.Value = 1;
         }
 
+        //This fires when the user clicks the plus or minus buttons. The if else
+        //statments decide which date range and pregnancy info is displayed.
         void Handle_ValueChanged(object sender, Xamarin.Forms.ValueChangedEventArgs e)
         {
             if ((int)stepper.Value == 1) 
@@ -65,11 +86,14 @@ namespace WhelpWizard
 			}
         }
 
+        //This will push the user to the dams list page.
 		void GoToListOfDams(object sender, System.EventArgs e)
 		{
 			Navigation.PushAsync(list);
 		}
 
+        //Fires when the dog name is changed. Changes the "Dam is Due" label to "'dog name' is due".
+        //Also restricts the user from typing more than 30 characters.
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             dogIsDue.Text = dogName.Text + " is due: ";
@@ -90,10 +114,12 @@ namespace WhelpWizard
 			}
         }
 
-        void Handle_Clicked(object sender, System.EventArgs e)
+        // Saves a dog and adds it to the dams list.
+        async void Handle_ClickedAsync(object sender, System.EventArgs e)
         {
             dog = new Dog(dogName.Text, picker.Date);
             list.addDog(dog);
+            await saveLoad.WriteToFile(dog);
         }
     }
 }

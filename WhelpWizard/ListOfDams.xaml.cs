@@ -8,11 +8,18 @@ namespace WhelpWizard
 {
     public partial class ListOfDams : ContentPage
     {
-        ObservableCollection<Dog> dog = new ObservableCollection<Dog>();
-		public ListOfDams()
+        ObservableCollection<Dog> dog;
+
+		public ListOfDams(ObservableCollection<Dog> dog)
         {
             InitializeComponent();
-            damsList.ItemsSource = dog;
+            this.dog = dog;
+            damsList.ItemsSource = dog; // IMPORTANT! The listview in the XAML has to be connected to a dams list.
+        }
+
+        public ListOfDams()
+        {
+            
         }
 
         public void addDog(Dog dog)
