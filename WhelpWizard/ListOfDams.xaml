@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.ListOfDams">
-	<ListView x:Name="damsList">
+	<ListView x:Name="damsList" ItemTapped="Handle_ItemTapped">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell Text="{Binding DogName}" Detail="{Binding DueDate}"/>
+                <ViewCell x:Name="cell">
+                     <ViewCell.ContextActions>
+                        <MenuItem Clicked="OnMore" CommandParameter="{Binding .}"
+                           Text="More" />
+                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+                           Text="Delete" IsDestructive="True" />
+                     </ViewCell.ContextActions>
+                     <StackLayout Padding="15,0">
+                         <Label Text="{Binding DogName}" />
+                        <Label Text="{Binding DueDate}" FontSize="12"></Label>
+                     </StackLayout>
+                  </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
