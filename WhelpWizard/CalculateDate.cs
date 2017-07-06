@@ -16,6 +16,12 @@ namespace WhelpWizard
 			return actualDate;
 		}
 
+        //Link the above method but returns a datetime instead
+        public static DateTime NumberOfDaysDateTime(DateTime dateText, double gestationDays)
+		{
+			return dateText.AddDays(gestationDays);
+		}
+
 		public static int DaysSubtracted(string endDateString)
 		{
 			DateTime endDate = DateTime.Parse(endDateString);

@@ -15,11 +15,14 @@
             <Label x:Name="dogIsDue" HorizontalOptions="Center"/>
             <Label HorizontalOptions="Center" x:Name="calculatedDate" FontAttributes="Bold"/>
         </StackLayout>
-        <StackLayout VerticalOptions="FillAndExpand"></StackLayout>
-        <Label Text="Pregnancy Information:" HorizontalOptions="Center" FontAttributes="Bold"/>
-        <StackLayout>
+
+        <StackLayout Margin="0, 40, 0, 0">
+            <Label Text="Pregnancy Information:" HorizontalOptions="Center" FontAttributes="Bold" FontSize="20"/>
             <Label HorizontalOptions="Center" x:Name="timeSpan"></Label>
-            <Editor Margin="10, 0, 0, 0" HorizontalOptions="Center" x:Name="pregnancyInfo" TextColor="Black" ></Editor>
+            <Label Margin="10, 0, 0, 0" HorizontalOptions="Center" x:Name="pregnancyInfo" LineBreakMode="WordWrap" FontSize="15"></Label>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <!--<Label Text=""></Label>-->
         </StackLayout>
         <StackLayout Orientation="Horizontal">
             <Button HorizontalOptions="StartAndExpand" Text="Dams" Margin="20, -10, -10, 20" Clicked="GoToListOfDams"></Button>

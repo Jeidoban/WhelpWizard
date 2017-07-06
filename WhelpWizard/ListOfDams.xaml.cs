@@ -14,7 +14,7 @@ namespace WhelpWizard
         {
             InitializeComponent();
             this.dog = dog;
-            damsList.ItemsSource = dog; // IMPORTANT! The listview in the XAML has to be connected to a dams list.
+            damsList.ItemsSource = dog; // IMPORTANT! The listview in the XAML has to be connected to an Observable list
             //thing();
         }
 
@@ -42,9 +42,11 @@ namespace WhelpWizard
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            //string thing = ((Dog)e.Item).DogName;
-            //DisplayAlert("titld", thing, "ok");
-            Navigation.PushAsync(new DamInformation());
+            string dogName = ((Dog)e.Item).DogName; //This is how you get data from a cell!!!!
+            DateTime breedingDate = ((Dog)e.Item).BreedingDate;
+
+            //DisplayAlert("titld", thing, "ok"); 
+            Navigation.PushAsync(new DamInformation(dogName, breedingDate));
         }
     }
 }
