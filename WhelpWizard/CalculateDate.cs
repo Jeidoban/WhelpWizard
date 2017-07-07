@@ -12,8 +12,7 @@ namespace WhelpWizard
         public static String NumberOfDays(DateTime dateText, double gestationDays)
 		{
             DateTime date = dateText.AddDays(gestationDays);
-			string actualDate = date.ToString("ddd, MMM d, yyyy");
-			return actualDate;
+			return date.ToString("ddd, MMM d, yyyy");
 		}
 
         //Link the above method but returns a datetime instead

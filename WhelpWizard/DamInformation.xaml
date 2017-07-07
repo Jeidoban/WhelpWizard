@@ -3,10 +3,21 @@
     <StackLayout>
         <StackLayout VerticalOptions="Start">
             <Label HorizontalOptions="Center" x:Name="damName" FontSize="24" FontAttributes="Bold"></Label>
-            <Label HorizontalOptions="Center" x:Name="pregDateLabel" FontSize="18"></Label>
+            <Label x:Name="daysLeftLabel" HorizontalOptions="Center"></Label>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout HorizontalOptions="Start" Margin="10, 0, 0, 0">
+                    <Label Text="Bred: " FontAttributes="Bold" HorizontalOptions="Center"></Label>
+                    <Label HorizontalOptions="Center" x:Name="breedingDateLabel" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout HorizontalOptions="EndAndExpand" Margin="0, 0, 10, 0">
+                    <Label Text="Due: " FontAttributes="Bold" HorizontalOptions="Center"></Label>
+                    <Label HorizontalOptions="Center" x:Name="pregDateLabel" FontSize="18"></Label>
+                </StackLayout>
+            </StackLayout>
+
             <Stepper HorizontalOptions="Center" x:Name="stepper" ValueChanged="SetDates"></Stepper>
         </StackLayout>
-       <Label HorizontalOptions="Center" Text="Pregnancy Information:"></Label>
+       <Label HorizontalOptions="Center" Text="Pregnancy Information:" FontAttributes="Bold"></Label>
        <Label HorizontalOptions="Center" x:Name="pregDate"></Label>
        <Label HorizontalOptions="Center" x:Name="pregInfo" LineBreakMode="WordWrap"></Label>
     </StackLayout>

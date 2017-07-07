@@ -17,7 +17,9 @@ namespace WhelpWizard
             this.dogName = dogName;
             this.breedingDate = breedingDate;
             damName.Text = dogName;
-            pregDateLabel.Text = "Due " + CalculateDate.NumberOfDays(breedingDate, 63);
+            pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
+            breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
+            DaysLeft();
 			stepper.Value = getCurrentDate();
 			stepper.Minimum = 1;
 			stepper.Maximum = 6;
@@ -93,8 +95,18 @@ namespace WhelpWizard
 				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 50d) + " - " + CalculateDate.NumberOfDays(breedingDate, 63d);
                 stepperSet = 6;
 			}
-
             return stepperSet;
+        }
+
+        public void DaysLeft()
+        {
+            int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));
+			if (daysLeft > 0)
+                daysLeftLabel.Text = daysLeft + " days until due";
+			else if (daysLeft == 0)
+                daysLeftLabel.Text = "Due today";
+			else if (daysLeft < 0)
+                daysLeftLabel.Text = "Was due " + Math.Abs(daysLeft) + " days ago";
         }
     }
 }

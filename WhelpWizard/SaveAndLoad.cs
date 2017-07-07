@@ -34,7 +34,7 @@ namespace WhelpWizard
 
         public async Task<ObservableCollection<Dog>> LoadFromfile(ObservableCollection<Dog> dog)
         {
-            IFolder rootFolder = FileSystem.Current.LocalStorage;// Get device storage
+            IFolder rootFolder = FileSystem.Current.LocalStorage;// Get device storage.
             while (rootFolder.CheckExistsAsync("dog" + fileNumber).Result == ExistenceCheckResult.FileExists) // while the file exists...
 			{
                 IFile file =  rootFolder.GetFileAsync("dog" + fileNumber).Result; // get the file.
