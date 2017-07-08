@@ -8,12 +8,12 @@ using System.IO;
 namespace WhelpWizard
 {
 
-    //This class took me way to long to figure out. The file saving system I used (PCLStorang)
+    //This class took me way to long to figure out. The file saving system I used (PCLStorage)
 	//uses asynchronous programming which super threw me off guard. Putting await in front of 
     //a method apparently suspends the method until that line of code is complete. However this
     //really messed me up as the view was not loading, and the debugger was getting stuck on
     //the lines that are prefixed with "await". THIS CAN BE FIXED BY APPENDING RESULT TO THE END
-    //OF THE STATMENT. Also revome the await.
+    //OF THE STATMENT. Also remove the await.
 	public class SaveAndLoad
     {
         private int fileNumber;
@@ -45,5 +45,6 @@ namespace WhelpWizard
 			}
             return dog;
         }
+
     }
 }

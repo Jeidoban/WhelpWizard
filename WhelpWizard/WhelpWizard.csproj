@@ -61,6 +61,7 @@
     <Compile Include="DamInformation.xaml.cs">
       <DependentUpon>DamInformation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Counter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

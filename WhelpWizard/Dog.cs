@@ -5,18 +5,26 @@ namespace WhelpWizard
     // This class just holds dog information.
     public class Dog
     {
-        public string DogName{ get; set; }
+        public string DogName { get; set; }
         public DateTime BreedingDate { get; set; }
-        public string DueDate { get; set; }
-        public string DaysLeft { get; set; }
-
-        public Dog(string dogName, DateTime breedingDate)
+        public string DueDate
         {
-            int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));
+            get
+            {
+				if (DateTime.Today > BreedingDate.AddDays(63))
+					return DogName + " was due " + CalculateDate.NumberOfDays(BreedingDate, 63);
+                else
+                    return DogName + " is due " + CalculateDate.NumberOfDays(BreedingDate, 63);
+			}
+        }
+        public int PlaceInList { get; set; }
+
+        public Dog(string dogName, DateTime breedingDate, int placeInList)
+        {
+            //int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));
             this.DogName = dogName;
             this.BreedingDate = breedingDate;
-            this.DueDate = DogName + " is due " + CalculateDate.NumberOfDays(BreedingDate, 63);
-           
+            this.PlaceInList = placeInList;
         }
     }
 }

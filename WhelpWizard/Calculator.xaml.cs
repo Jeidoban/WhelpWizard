@@ -24,7 +24,7 @@ namespace WhelpWizard
         {
             InitializeComponent();
             saveLoad = new SaveAndLoad();
-            dogList = new ObservableCollection<Dog>();
+            dogList = new ObservableCollection<Dog>(); // This needs to be initialized on app startup, regardless on what page it starts on.
             list = new ListOfDams(PopulateList(dogList));
 			dogIsDue.Text = "Dam is Due: ";
             calculatedDate.Text = CalculateDate.NumberOfDays(picker.Date, 63);
@@ -117,7 +117,7 @@ namespace WhelpWizard
         // Saves a dog and adds it to the dams list.
         async void Handle_ClickedAsync(object sender, System.EventArgs e)
         {
-            dog = new Dog(dogName.Text, picker.Date);
+            dog = new Dog(dogName.Text, picker.Date, Counter.totalDogs++);
             list.addDog(dog);
             await saveLoad.WriteToFile(dog);
         }

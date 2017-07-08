@@ -27,6 +27,7 @@ namespace WhelpWizard
 
         public DamInformation() { }
 
+        //This works the same way as the one in the calculator class.
         public void SetDates(object sender, Xamarin.Forms.ValueChangedEventArgs e) 
         {
 			if ((int)stepper.Value == 1)
@@ -61,6 +62,8 @@ namespace WhelpWizard
 			}
         }
 
+        // Same as the one above, except will take today's date and display the correct stage of pregnancy the dog is in when this
+        // view is triggered.
         public int getCurrentDate()
         {
             int stepperSet = 0;
@@ -98,6 +101,7 @@ namespace WhelpWizard
             return stepperSet;
         }
 
+        // Calculates the days until the dog delivers.
         public void DaysLeft()
         {
             int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));

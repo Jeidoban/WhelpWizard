@@ -15,7 +15,8 @@ namespace WhelpWizard
 			return date.ToString("ddd, MMM d, yyyy");
 		}
 
-        //Link the above method but returns a datetime instead
+        //Link the above method but returns a datetime instead.
+        //I just realized this method is completely useless...
         public static DateTime NumberOfDaysDateTime(DateTime dateText, double gestationDays)
 		{
 			return dateText.AddDays(gestationDays);
