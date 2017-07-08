@@ -16,14 +16,9 @@ namespace WhelpWizard
     //OF THE STATMENT. Also remove the await.
 	public class SaveAndLoad
     {
-        private int fileNumber;
+        public static int fileNumber = 0;
 
-		public SaveAndLoad()
-        {
-            fileNumber = 1;
-        }
-
-        public async Task WriteToFile(Dog dog)
+        public static async Task WriteToFile(Dog dog)
         {
             string json = JsonConvert.SerializeObject(dog); // Convert Dog C# object to json.
             IFolder rootFolder = FileSystem.Current.LocalStorage; // get device storage.
@@ -32,7 +27,7 @@ namespace WhelpWizard
             fileNumber++;
         }
 
-        public async Task<ObservableCollection<Dog>> LoadFromfile(ObservableCollection<Dog> dog)
+        public static async Task<ObservableCollection<Dog>> LoadFromfile(ObservableCollection<Dog> dog)
         {
             IFolder rootFolder = FileSystem.Current.LocalStorage;// Get device storage.
             while (rootFolder.CheckExistsAsync("dog" + fileNumber).Result == ExistenceCheckResult.FileExists) // while the file exists...
@@ -46,5 +41,26 @@ namespace WhelpWizard
             return dog;
         }
 
+        // Ok this was pretty fun to brainstorm. This function will delete a dog from the list.
+        // I'll go through it step by step. 
+        public static async Task DeleteCell(ObservableCollection<Dog> dog, int index) // This passes in the dog list as well as the index of the cell being deleted.
+        {                                                                             // The index is determined where this method is called from.
+            Dog currentDog; // Create dog object.
+			IFolder rootFolder = FileSystem.Current.LocalStorage;// Get device storage.
+            IFile file = rootFolder.GetFileAsync("dog" + index).Result; // Gets the file that is getting deleted (whatever the index was that was passed in).
+            dog.RemoveAt(index);// Remove the dog from the list.
+            await file.DeleteAsync(); // Remove the file saved associated with the dog in the device storage.
+            fileNumber--; // decrement the file number.
+            index++; // increment the index.
+            while (rootFolder.CheckExistsAsync("dog" + index).Result == ExistenceCheckResult.FileExists) // while the file exists...
+			{
+                file = rootFolder.GetFileAsync("dog" + index).Result; // update file to reflect the new index.
+                currentDog = dog[index - 1]; // get the dog object in list. It says minus one because observable automatically updates the index when an item is removed.
+                currentDog.PlaceInList = index - 1; // Update the PlaceInList variable in the dog class to the index - 1 (essentially subtracting the variable in the dog file by one).
+                await file.WriteAllTextAsync(JsonConvert.SerializeObject(currentDog)); // Rewrite the file.
+                await file.RenameAsync("dog" + (index - 1)); // rename the file with the new index.
+                index++; // increment the index.
+			}
+        }
     }
 }

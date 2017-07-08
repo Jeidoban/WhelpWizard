@@ -16,16 +16,17 @@ namespace WhelpWizard
         string max; // This makes the user doesn't enter a name more that 30 characters long.
 		public ListOfDams list; // This is the list of Dams page.
         Dog dog; // Holds information on a dog.
-        SaveAndLoad saveLoad; // File writing and reading class.
+        //SaveAndLoad saveLoad; // File writing and reading class.
         ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
 
         // I'm just initializing most of the XAML elemnts here.
         public Calculator()
         {
             InitializeComponent();
-            saveLoad = new SaveAndLoad();
+            //saveLoad = new SaveAndLoad();
             dogList = new ObservableCollection<Dog>(); // This needs to be initialized on app startup, regardless on what page it starts on.
             list = new ListOfDams(PopulateList(dogList));
+            dogName.Text = "";
 			dogIsDue.Text = "Dam is Due: ";
             calculatedDate.Text = CalculateDate.NumberOfDays(picker.Date, 63);
             pregnancyInfo.Text = PregnancyInfo.firstStage;
@@ -38,7 +39,7 @@ namespace WhelpWizard
         // Pretty much a shell function because it used to be an async method. I didn't feel like changing it after it worked lol.
         public ObservableCollection<Dog> PopulateList(ObservableCollection<Dog> dog)
         {
-            var thing = saveLoad.LoadFromfile(dog);
+            var thing = SaveAndLoad.LoadFromfile(dog);
             return thing.Result; // APPEND RESULT ON THE END OF TASKS TO GET THE ACTUAL OBJECT. God that took me way to long to figure out lol. 
                                  // There goes 4 hours of my life >:(
         }
@@ -103,12 +104,12 @@ namespace WhelpWizard
                 dogIsDue.Text = "Dam is due: ";
             }
 
-            if (dogName.Text.Length == 30)
+            if (dogName.Text.Length == 50)
             {
                 max = dogName.Text;	
             }
 
-            if (dogName.Text.Length > 30)
+            if (dogName.Text.Length > 50)
 			{
 				dogName.Text = max;
 			}
@@ -117,9 +118,19 @@ namespace WhelpWizard
         // Saves a dog and adds it to the dams list.
         async void Handle_ClickedAsync(object sender, System.EventArgs e)
         {
-            dog = new Dog(dogName.Text, picker.Date, Counter.totalDogs++);
-            list.addDog(dog);
-            await saveLoad.WriteToFile(dog);
+            if (dogName.Text.Length == 0)
+            {
+                await DisplayAlert("No name inserted!", "Please enter a name to save.", "Ok");
+            }
+            else
+            {
+                dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
+                list.addDog(dog);
+                await SaveAndLoad.WriteToFile(dog);
+                await DisplayAlert("Dam Saved", dogName.Text + " has been saved into your phone.", "Ok");
+                picker.Date = DateTime.Today;
+                dogName.Text = "";
+            }
         }
     }
 }

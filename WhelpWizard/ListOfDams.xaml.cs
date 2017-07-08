@@ -37,16 +37,13 @@ namespace WhelpWizard
             Dog getInfo = (Dog)mi.BindingContext;
             int index = getInfo.PlaceInList;
 
-            //TODO: You need to update the PlaceInList variable in all dog objects
-            //when one is deleted. If you don't terrible things are gonna happen lol.
-
-            DisplayAlert("dfdf", index.ToString(), "dfdf");
+            SaveAndLoad.DeleteCell(dog, index);
 		}
 
-        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        void Handle_ItemSelected(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            string dogName = ((Dog)e.SelectedItem).DogName; //This is how you get data from a cell!!!!
-            DateTime breedingDate = ((Dog)e.SelectedItem).BreedingDate;
+            string dogName = ((Dog)e.Item).DogName; //This is how you get data from a cell!!!!
+            DateTime breedingDate = ((Dog)e.Item).BreedingDate;
 			Navigation.PushAsync(new DamInformation(dogName, breedingDate));
         }
     }

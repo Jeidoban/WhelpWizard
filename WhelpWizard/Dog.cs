@@ -12,9 +12,9 @@ namespace WhelpWizard
             get
             {
 				if (DateTime.Today > BreedingDate.AddDays(63))
-					return DogName + " was due " + CalculateDate.NumberOfDays(BreedingDate, 63);
+					return "Was due " + CalculateDate.NumberOfDays(BreedingDate, 63);
                 else
-                    return DogName + " is due " + CalculateDate.NumberOfDays(BreedingDate, 63);
+                    return "Due " + CalculateDate.NumberOfDays(BreedingDate, 63);
 			}
         }
         public int PlaceInList { get; set; }
