@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using Plugin.LocalNotifications;
 using PCLStorage;
 
 namespace WhelpWizard
@@ -18,6 +19,7 @@ namespace WhelpWizard
         Dog dog; // Holds information on a dog.
         //SaveAndLoad saveLoad; // File writing and reading class.
         ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
+        //Notifications note;
 
         // I'm just initializing most of the XAML elemnts here.
         public Calculator()
@@ -124,13 +126,27 @@ namespace WhelpWizard
             }
             else
             {
+                //TODO: add counter for the ID's of notifications. It will not push if there are conflicting ID's
+
                 dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
-                list.addDog(dog);
+                //Notifications();
+				list.addDog(dog);
                 await SaveAndLoad.WriteToFile(dog);
                 await DisplayAlert("Dam Saved", dogName.Text + " has been saved into your phone.", "Ok");
                 picker.Date = DateTime.Today;
                 dogName.Text = "";
             }
+        }
+
+        public void Notifications(DateTime breedingDate, string name)
+        {
+			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddMinutes(1327));
+			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(15));
+			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(22));
+			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(29));
+			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(36));
+			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(50));
+			CrossLocalNotifications.Current.Show(name + " almost due", name + " is due any day now.", 101, breedingDate.AddDays(61));  
         }
     }
 }

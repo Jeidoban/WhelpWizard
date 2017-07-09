@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using Plugin.LocalNotifications;
 
 namespace WhelpWizard
 {
@@ -7,6 +8,7 @@ namespace WhelpWizard
         public WhelpWizardPage()
         {
             InitializeComponent();
+
         }
 
         void GoToCalculator(object sender, System.EventArgs e)
