@@ -17,6 +17,7 @@ namespace WhelpWizard
 	public class SaveAndLoad
     {
         public static int fileNumber = 0;
+        public static int notificationId = 0;
 
         public static async Task WriteToFile(Dog dog)
         {
@@ -60,6 +61,24 @@ namespace WhelpWizard
                 await file.WriteAllTextAsync(JsonConvert.SerializeObject(currentDog)); // Rewrite the file.
                 await file.RenameAsync("dog" + (index - 1)); // rename the file with the new index.
                 index++; // increment the index.
+			}
+        }
+
+        public static void SaveNotificationId()
+        {
+            notificationId += 6;
+            IFolder rootFolder = FileSystem.Current.LocalStorage;
+            IFile file = rootFolder.CreateFileAsync("notificationIdCounter", CreationCollisionOption.ReplaceExisting).Result;
+            file.WriteAllTextAsync(notificationId.ToString());
+        }
+
+        public static void LoadNotificationId()
+        {
+            IFolder rootFolder = FileSystem.Current.LocalStorage;
+            if (rootFolder.CheckExistsAsync("notificationIdCounter").Result == ExistenceCheckResult.FileExists) // while the file exists...
+			{
+				IFile file = rootFolder.GetFileAsync("notificationIdCounter").Result; // get the file.
+                notificationId = Int32.Parse(file.ReadAllTextAsync().Result);
 			}
         }
     }

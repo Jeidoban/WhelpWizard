@@ -17,9 +17,7 @@ namespace WhelpWizard
         string max; // This makes the user doesn't enter a name more that 30 characters long.
 		public ListOfDams list; // This is the list of Dams page.
         Dog dog; // Holds information on a dog.
-        //SaveAndLoad saveLoad; // File writing and reading class.
         ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
-        //Notifications note;
 
         // I'm just initializing most of the XAML elemnts here.
         public Calculator()
@@ -58,35 +56,33 @@ namespace WhelpWizard
         //statments decide which date range and pregnancy info is displayed.
         void Handle_ValueChanged(object sender, Xamarin.Forms.ValueChangedEventArgs e)
         {
-            if ((int)stepper.Value == 1) 
+            switch ((int)stepper.Value)
             {
-                pregnancyInfo.Text = PregnancyInfo.firstStage;
-                timeSpan.Text = picker.Date.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(picker.Date, 14);
-            } else if ((int)stepper.Value == 2)
-            {
-                pregnancyInfo.Text = PregnancyInfo.secondStage;
-                timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 15) + " - " + CalculateDate.NumberOfDays(picker.Date, 21);
+                case 1:
+                    pregnancyInfo.Text = PregnancyInfo.firstStage;
+                    timeSpan.Text = picker.Date.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(picker.Date, 14);
+                    break;
+                case 2:
+                    pregnancyInfo.Text = PregnancyInfo.secondStage;
+                    timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 15) + " - " + CalculateDate.NumberOfDays(picker.Date, 21);
+                    break;
+                case 3:
+                    pregnancyInfo.Text = PregnancyInfo.thirdStage;
+                    timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 22) + " - " + CalculateDate.NumberOfDays(picker.Date, 28);
+                    break;
+                case 4:
+                    pregnancyInfo.Text = PregnancyInfo.fourthStage;
+                    timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 29) + " - " + CalculateDate.NumberOfDays(picker.Date, 35);
+                    break;
+                case 5:
+                    pregnancyInfo.Text = PregnancyInfo.fifthStage;
+                    timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 36) + " - " + CalculateDate.NumberOfDays(picker.Date, 49);
+                    break;
+                case 6:
+                    pregnancyInfo.Text = PregnancyInfo.sixthStage;
+                    timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 50) + " - " + CalculateDate.NumberOfDays(picker.Date, 63);
+                    break;
             }
-			else if ((int)stepper.Value == 3)
-			{
-                pregnancyInfo.Text = PregnancyInfo.thirdStage;
-                timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 22) + " - " + CalculateDate.NumberOfDays(picker.Date, 28);
-			}
-			else if ((int)stepper.Value == 4)
-			{
-                pregnancyInfo.Text = PregnancyInfo.fourthStage;
-                timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 29) + " - " + CalculateDate.NumberOfDays(picker.Date, 35);
-			}
-			else if ((int)stepper.Value == 5)
-			{
-                pregnancyInfo.Text = PregnancyInfo.fifthStage;
-                timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 36) + " - " + CalculateDate.NumberOfDays(picker.Date, 49);
-			}
-			else if ((int)stepper.Value == 6)
-			{
-                pregnancyInfo.Text = PregnancyInfo.sixthStage;
-                timeSpan.Text = CalculateDate.NumberOfDays(picker.Date, 50) + " - " + CalculateDate.NumberOfDays(picker.Date, 63);
-			}
         }
 
         //This will push the user to the dams list page.
@@ -101,14 +97,14 @@ namespace WhelpWizard
         {
             dogIsDue.Text = dogName.Text + " is due: ";
 
-            if (dogName.Text.Length == 0)
+            switch (dogName.Text.Length)
             {
-                dogIsDue.Text = "Dam is due: ";
-            }
-
-            if (dogName.Text.Length == 50)
-            {
-                max = dogName.Text;	
+                case 0:
+                    dogIsDue.Text = "Dam is due: ";
+                    break;
+                case 50:
+                    max = dogName.Text;
+                    break;
             }
 
             if (dogName.Text.Length > 50)
@@ -129,7 +125,8 @@ namespace WhelpWizard
                 //TODO: add counter for the ID's of notifications. It will not push if there are conflicting ID's
 
                 dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
-                //Notifications();
+                Notifications(picker.Date, dogName.Text);
+                SaveAndLoad.SaveNotificationId();
 				list.addDog(dog);
                 await SaveAndLoad.WriteToFile(dog);
                 await DisplayAlert("Dam Saved", dogName.Text + " has been saved into your phone.", "Ok");
@@ -140,13 +137,13 @@ namespace WhelpWizard
 
         public void Notifications(DateTime breedingDate, string name)
         {
-			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddMinutes(1327));
-			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(15));
-			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(22));
-			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(29));
-			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(36));
-			CrossLocalNotifications.Current.Show("New week entered", name + " has " + CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63)) + " days until due! See what's happening with her pregnancy.", 101, breedingDate.AddDays(50));
-			CrossLocalNotifications.Current.Show(name + " almost due", name + " is due any day now.", 101, breedingDate.AddDays(61));  
+            var notif = CrossLocalNotifications.Current;
+            notif.Show("New week entered", name + " has 47 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId, breedingDate.AddDays(15).AddHours(12));
+			notif.Show("New week entered", name + " has 40 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 1, breedingDate.AddDays(22).AddHours(12));
+			notif.Show("New week entered", name + " has 33 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 2, breedingDate.AddDays(29).AddHours(12));
+			notif.Show("New week entered", name + " has 26 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 3, breedingDate.AddDays(36).AddHours(12));
+			notif.Show("New week entered", name + " has 12 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 4, breedingDate.AddDays(50).AddHours(12));
+            notif.Show(name + " is almost due!", name + " is due any day now.", SaveAndLoad.notificationId + 5, breedingDate.AddDays(61).AddHours(12));  
         }
     }
 }

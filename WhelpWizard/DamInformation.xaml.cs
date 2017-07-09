@@ -30,36 +30,33 @@ namespace WhelpWizard
         //This works the same way as the one in the calculator class.
         public void SetDates(object sender, Xamarin.Forms.ValueChangedEventArgs e) 
         {
-			if ((int)stepper.Value == 1)
-			{
-                pregInfo.Text = PregnancyInfo.firstStage;
-                pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14);
-			}
-			else if ((int)stepper.Value == 2)
-			{
-				pregInfo.Text = PregnancyInfo.secondStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 15) + " - " + CalculateDate.NumberOfDays(breedingDate, 21);
-			}
-			else if ((int)stepper.Value == 3)
-			{
-				pregInfo.Text = PregnancyInfo.thirdStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 22) + " - " + CalculateDate.NumberOfDays(breedingDate, 28);
-			}
-			else if ((int)stepper.Value == 4)
-			{
-				pregInfo.Text = PregnancyInfo.fourthStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 29) + " - " + CalculateDate.NumberOfDays(breedingDate, 35);
-			}
-			else if ((int)stepper.Value == 5)
-			{
-				pregInfo.Text = PregnancyInfo.fifthStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 36) + " - " + CalculateDate.NumberOfDays(breedingDate, 49);
-			}
-			else if ((int)stepper.Value == 6)
-			{
-				pregInfo.Text = PregnancyInfo.sixthStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 50) + " - " + CalculateDate.NumberOfDays(breedingDate, 63);
-			}
+            switch ((int)stepper.Value)
+            {
+                case 1:
+                    pregInfo.Text = PregnancyInfo.firstStage;
+                    pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14);
+                    break;
+                case 2:
+                    pregInfo.Text = PregnancyInfo.secondStage;
+                    pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 15) + " - " + CalculateDate.NumberOfDays(breedingDate, 21);
+                    break;
+                case 3:
+                    pregInfo.Text = PregnancyInfo.thirdStage;
+                    pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 22) + " - " + CalculateDate.NumberOfDays(breedingDate, 28);
+                    break;
+                case 4:
+                    pregInfo.Text = PregnancyInfo.fourthStage;
+                    pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 29) + " - " + CalculateDate.NumberOfDays(breedingDate, 35);
+                    break;
+                case 5:
+                    pregInfo.Text = PregnancyInfo.fifthStage;
+                    pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 36) + " - " + CalculateDate.NumberOfDays(breedingDate, 49);
+                    break;
+                case 6:
+                    pregInfo.Text = PregnancyInfo.sixthStage;
+                    pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 50) + " - " + CalculateDate.NumberOfDays(breedingDate, 63);
+                    break;
+            }
         }
 
         // Same as the one above, except will take today's date and display the correct stage of pregnancy the dog is in when this

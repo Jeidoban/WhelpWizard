@@ -9,6 +9,7 @@ namespace WhelpWizard
         public App()
         {
             InitializeComponent();
+            SaveAndLoad.LoadNotificationId();
             MainPage = new NavigationPage(new Calculator());
         }
 
