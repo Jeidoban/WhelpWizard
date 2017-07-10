@@ -15,26 +15,31 @@ namespace WhelpWizard
     public partial class Calculator : ContentPage
     {
         string max; // This makes the user doesn't enter a name more that 30 characters long.
-		public ListOfDams list; // This is the list of Dams page.
+        int stepperValue = 1;
+		ListOfDams list; // This is the list of Dams page.
         Dog dog; // Holds information on a dog.
-        ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
+        //ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
 
         // I'm just initializing most of the XAML elemnts here.
-        public Calculator()
+        public Calculator(ListOfDams list)
         {
             InitializeComponent();
             //saveLoad = new SaveAndLoad();
-            dogList = new ObservableCollection<Dog>(); // This needs to be initialized on app startup, regardless on what page it starts on.
-            list = new ListOfDams(PopulateList(dogList));
+            //dogList = new ObservableCollection<Dog>(); // This needs to be initialized on app startup, regardless on what page it starts on.
+            this.list = list;
             dogName.Text = "";
 			dogIsDue.Text = "Dam is Due: ";
             calculatedDate.Text = CalculateDate.NumberOfDays(picker.Date, 63);
             pregnancyInfo.Text = PregnancyInfo.firstStage;
-            stepper.Value = 1;
-            stepper.Minimum = 1;
-            stepper.Maximum = 6;
-            stepper.Increment = 1;
+            stepperLeft.IsEnabled = false;
+            PregnancyCases();
+            //stepper.Value = 1;
+            //stepper.Minimum = 1;
+            //stepper.Maximum = 6;
+            //stepper.Increment = 1;
         }
+
+        public Calculator() {}
 
         // Pretty much a shell function because it used to be an async method. I didn't feel like changing it after it worked lol.
         public ObservableCollection<Dog> PopulateList(ObservableCollection<Dog> dog)
@@ -49,14 +54,14 @@ namespace WhelpWizard
         {
             calculatedDate.Text = CalculateDate.NumberOfDays(picker.Date, 63);
             timeSpan.Text = picker.Date.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(picker.Date, 14);
-            stepper.Value = 1;
+           // stepper.Value = 1;
         }
 
         //This fires when the user clicks the plus or minus buttons. The if else
         //statments decide which date range and pregnancy info is displayed.
-        void Handle_ValueChanged(object sender, Xamarin.Forms.ValueChangedEventArgs e)
+        public void PregnancyCases()
         {
-            switch ((int)stepper.Value)
+            switch (stepperValue)
             {
                 case 1:
                     pregnancyInfo.Text = PregnancyInfo.firstStage;
@@ -85,10 +90,46 @@ namespace WhelpWizard
             }
         }
 
-        //This will push the user to the dams list page.
-		void GoToListOfDams(object sender, System.EventArgs e)
+        void StepperPressedLeft(object sender, System.EventArgs e)
+        {
+            stepperValue--;
+
+			if (stepperValue == 1)
+			{   
+                stepperLeft.IsEnabled = false;
+                stepperRight.IsEnabled = true;
+            }
+            else 
+			{
+                stepperLeft.IsEnabled = true;
+                stepperRight.IsEnabled = true;
+			}
+
+            PregnancyCases();
+        }
+
+		void StepperPressedRight(object sender, System.EventArgs e)
 		{
-			Navigation.PushAsync(list);
+			stepperValue++;
+
+			if (stepperValue == 6)
+			{
+                stepperRight.IsEnabled = false;
+                stepperLeft.IsEnabled = true;
+			}
+			else
+			{
+                stepperRight.IsEnabled = true;
+                stepperLeft.IsEnabled = true;
+			}
+
+			PregnancyCases();
+		}
+
+        //This will push the user to the dams list page.
+        void GoToMore(object sender, System.EventArgs e)
+		{
+			//Navigation.PushAsync(list);
 		}
 
         //Fires when the dog name is changed. Changes the "Dam is Due" label to "'dog name' is due".
@@ -122,7 +163,6 @@ namespace WhelpWizard
             }
             else
             {
-                //TODO: add counter for the ID's of notifications. It will not push if there are conflicting ID's
 
                 dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
                 Notifications(picker.Date, dogName.Text);
@@ -138,11 +178,11 @@ namespace WhelpWizard
         public void Notifications(DateTime breedingDate, string name)
         {
             var notif = CrossLocalNotifications.Current;
-            notif.Show("New week entered", name + " has 47 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId, breedingDate.AddDays(15).AddHours(12));
-			notif.Show("New week entered", name + " has 40 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 1, breedingDate.AddDays(22).AddHours(12));
-			notif.Show("New week entered", name + " has 33 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 2, breedingDate.AddDays(29).AddHours(12));
-			notif.Show("New week entered", name + " has 26 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 3, breedingDate.AddDays(36).AddHours(12));
-			notif.Show("New week entered", name + " has 12 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 4, breedingDate.AddDays(50).AddHours(12));
+            notif.Show("New Milestone Achieved", name + " has 47 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId, breedingDate.AddDays(15).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 40 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 1, breedingDate.AddDays(22).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 33 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 2, breedingDate.AddDays(29).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 26 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 3, breedingDate.AddDays(36).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 12 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 4, breedingDate.AddDays(50).AddHours(12));
             notif.Show(name + " is almost due!", name + " is due any day now.", SaveAndLoad.notificationId + 5, breedingDate.AddDays(61).AddHours(12));  
         }
     }

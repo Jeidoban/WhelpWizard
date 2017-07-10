@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:WhelpWizard" x:Class="WhelpWizard.WhelpWizardPage">
-	<StackLayout Orientation="Vertical">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:WhelpWizard" x:Class="WhelpWizard.WhelpWizardPage" Title="Whelp Wizard" BackgroundColor="#D9DCD6">
+	<StackLayout Orientation="Vertical" BackgroundColor="#D9DCD6">
         <Label 
             VerticalOptions="CenterAndExpand" 
             HorizontalOptions="Center" 
             Text="Whelp Wizard" 
-            FontSize="30" 
+            FontSize="40" 
+            TextColor="#61988E"
+            FontAttributes="None"
+            FontFamily="Avenir"
         />
         <StackLayout Orientation="Horizontal">
-            <Button Text="List of Dams" HorizontalOptions="Start" Margin="20, 20, 0, 10" Clicked="GoToListOfDams"/>
-            <Button Text="Calculator" HorizontalOptions="EndAndExpand" Margin="0, 20, 20, 10" Clicked="GoToCalculator"/>
+            <Button Text="List of Dams" HorizontalOptions="Start" Margin="20, 20, 0, 10" Clicked="Handle_Clicked" BackgroundColor="#61988E" TextColor="White" BorderColor="Transparent" WidthRequest="120"/>
+            <Button Text="Add a Dam" HorizontalOptions="EndAndExpand" Margin="0, 20, 20, 10" Clicked="GoToCalculator" BackgroundColor="#61988E" TextColor="White" BorderColor="Transparent" WidthRequest="110"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

@@ -9,6 +9,7 @@ namespace WhelpWizard
     {
         string dogName;
         DateTime breedingDate;
+        int stepperValue;
 
         public DamInformation(string dogName, DateTime breedingDate)
         {
@@ -20,17 +21,19 @@ namespace WhelpWizard
             pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
             breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
             DaysLeft();
-			stepper.Value = getCurrentDate();
-			stepper.Minimum = 1;
-			stepper.Maximum = 6;
+            stepperLeft.IsEnabled = false;
+            stepperValue = getCurrentDate();
+			//stepper.Value = getCurrentDate();
+			//stepper.Minimum = 1;
+			//stepper.Maximum = 6;
         }
 
         public DamInformation() { }
 
         //This works the same way as the one in the calculator class.
-        public void SetDates(object sender, Xamarin.Forms.ValueChangedEventArgs e) 
+        public void PregnancyCases() 
         {
-            switch ((int)stepper.Value)
+            switch (stepperValue)
             {
                 case 1:
                     pregInfo.Text = PregnancyInfo.firstStage;
@@ -58,6 +61,42 @@ namespace WhelpWizard
                     break;
             }
         }
+
+		void StepperPressedLeft(object sender, System.EventArgs e)
+		{
+			stepperValue--;
+
+			if (stepperValue == 1)
+			{
+				stepperLeft.IsEnabled = false;
+				stepperRight.IsEnabled = true;
+			}
+			else
+			{
+				stepperLeft.IsEnabled = true;
+				stepperRight.IsEnabled = true;
+			}
+
+			PregnancyCases();
+		}
+
+		void StepperPressedRight(object sender, System.EventArgs e)
+		{
+			stepperValue++;
+
+			if (stepperValue == 6)
+			{
+				stepperRight.IsEnabled = false;
+				stepperLeft.IsEnabled = true;
+			}
+			else
+			{
+				stepperRight.IsEnabled = true;
+				stepperLeft.IsEnabled = true;
+			}
+
+			PregnancyCases();
+		}
 
         // Same as the one above, except will take today's date and display the correct stage of pregnancy the dog is in when this
         // view is triggered.

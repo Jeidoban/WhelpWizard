@@ -10,7 +10,8 @@ namespace WhelpWizard
         {
             InitializeComponent();
             SaveAndLoad.LoadNotificationId();
-            MainPage = new NavigationPage(new Calculator());
+            MainPage = new NavigationPage(new WhelpWizardPage());
+           //MainPage.BackgroundColor = Color.FromHex("#D9DCD6");
         }
 
         protected override void OnStart()
