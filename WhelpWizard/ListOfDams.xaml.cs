@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 using Xamarin.Forms;
 
@@ -8,13 +9,15 @@ namespace WhelpWizard
 {
     public partial class ListOfDams : ContentPage
     {
-        ObservableCollection<Dog> dog;
+        ObservableCollection<Dog> dogs;
+        ObservableCollection<Dog> dogsTemp;
 
-		public ListOfDams(ObservableCollection<Dog> dog)
+		public ListOfDams(ObservableCollection<Dog> dogs)
         {
             InitializeComponent();
-            this.dog = dog;
-            damsList.ItemsSource = dog; // IMPORTANT! The listview in the XAML has to be connected to an Observable list
+            this.dogs = dogs;
+            damsList.ItemsSource = dogs; // IMPORTANT! The listview in the XAML has to be connected to an Observable list
+            dogsTemp = new ObservableCollection<Dog>(dogs);
         }
 
         public ListOfDams()
@@ -24,7 +27,7 @@ namespace WhelpWizard
 
         public void addDog(Dog dog)
         {
-            this.dog.Add(dog);   
+            this.dogs.Add(dog);   
         }
 
         // I needed to get the index of the item in the list so I could delete it from the list. 
@@ -37,7 +40,7 @@ namespace WhelpWizard
             Dog getInfo = (Dog)mi.BindingContext;
             int index = getInfo.PlaceInList;
 
-            SaveAndLoad.DeleteCell(dog, index);
+            SaveAndLoad.DeleteCell(dogs, index);
 		}
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.ItemTappedEventArgs e)
@@ -45,6 +48,21 @@ namespace WhelpWizard
             string dogName = ((Dog)e.Item).DogName; //This is how you get data from a cell!!!!
             DateTime breedingDate = ((Dog)e.Item).BreedingDate;
 			Navigation.PushAsync(new DamInformation(dogName, breedingDate));
+        }
+
+        //TODO: Make it so when you add a letter a remove loop runs and when you remove a letter an add loop runs.
+        void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+            damsList.ItemsSource = dogsTemp;
+
+            for (int i = 0; i < dogsTemp.Count; i++)
+            {
+                if(!dogsTemp[i].DogName.Contains(searchBar.Text))
+                {
+                    dogsTemp.RemoveAt(i);
+                    i--;
+                } 
+            }
         }
     }
 }
