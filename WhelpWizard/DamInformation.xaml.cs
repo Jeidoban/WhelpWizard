@@ -21,8 +21,15 @@ namespace WhelpWizard
             pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
             breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
             DaysLeft();
-            stepperLeft.IsEnabled = false;
             stepperValue = getCurrentDate();
+
+            if (stepperValue == 1)
+            {
+                stepperLeft.IsEnabled = false;
+            } else if (stepperValue == 6)
+            {
+                stepperRight.IsEnabled = false;
+            }
 			//stepper.Value = getCurrentDate();
 			//stepper.Minimum = 1;
 			//stepper.Maximum = 6;
@@ -133,7 +140,12 @@ namespace WhelpWizard
                 pregInfo.Text = PregnancyInfo.sixthStage;
 				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 50d) + " - " + CalculateDate.NumberOfDays(breedingDate, 63d);
                 stepperSet = 6;
-			}
+			} else 
+            {
+				pregInfo.Text = PregnancyInfo.firstStage;
+				pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14d);
+				stepperSet = 1;
+            }
             return stepperSet;
         }
 
@@ -141,12 +153,14 @@ namespace WhelpWizard
         public void DaysLeft()
         {
             int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));
-			if (daysLeft > 0)
+			if (daysLeft > 1)
                 daysLeftLabel.Text = daysLeft + " days until due";
 			else if (daysLeft == 0)
                 daysLeftLabel.Text = "Due today";
 			else if (daysLeft < 0)
                 daysLeftLabel.Text = "Was due " + Math.Abs(daysLeft) + " days ago";
+            else if (daysLeft == 1)
+                daysLeftLabel.Text = daysLeft + " day until due";
         }
     }
 }

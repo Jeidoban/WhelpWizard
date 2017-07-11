@@ -8,11 +8,29 @@
             FontSize="40" 
             TextColor="#61988E"
             FontAttributes="None"
-            FontFamily="Avenir"
-        />
+        >
+            <Label.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <OnPlatform.iOS>Avenir</OnPlatform.iOS>
+                    <OnPlatform.Android>Hind-Regular.ttf#Hind-Regular</OnPlatform.Android>
+                </OnPlatform>
+            </Label.FontFamily>
+        </Label>
         <StackLayout Orientation="Horizontal">
-            <Button Text="List of Dams" HorizontalOptions="Start" Margin="20, 20, 0, 10" Clicked="Handle_Clicked" BackgroundColor="#61988E" TextColor="White" BorderColor="Transparent" WidthRequest="120"/>
-            <Button Text="Add a Dam" HorizontalOptions="EndAndExpand" Margin="0, 20, 20, 10" Clicked="GoToCalculator" BackgroundColor="#61988E" TextColor="White" BorderColor="Transparent" WidthRequest="110"/>
+            <Button Text="List of Dams" HorizontalOptions="Start" Margin="20, 20, 0, 10" Clicked="Handle_Clicked" BackgroundColor="#61988E" TextColor="White" BorderColor="Transparent" WidthRequest="120">
+                <Button.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.Android>Hind-Regular.ttf#Hind-Regular</OnPlatform.Android>
+                    </OnPlatform>
+                </Button.FontFamily>
+            </Button>
+            <Button Text="Add a Dam" HorizontalOptions="EndAndExpand" Margin="0, 20, 20, 10" Clicked="GoToCalculator" BackgroundColor="#61988E" TextColor="White" BorderColor="Transparent" WidthRequest="110">
+                <Button.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.Android>Hind-Regular.ttf#Hind-Regular</OnPlatform.Android>
+                    </OnPlatform>
+                </Button.FontFamily>
+            </Button>
         </StackLayout>
     </StackLayout>
 </ContentPage>
