@@ -11,6 +11,7 @@ namespace WhelpWizard
     {
         ObservableCollection<Dog> dogs;
         ObservableCollection<Dog> dogsTemp;
+        int searchBarText = 0;
 
 		public ListOfDams(ObservableCollection<Dog> dogs)
         {
@@ -55,13 +56,40 @@ namespace WhelpWizard
         {
             damsList.ItemsSource = dogsTemp;
 
-            for (int i = 0; i < dogsTemp.Count; i++)
+            if (searchBarText < searchBar.Text.Length)
             {
-                if(!dogsTemp[i].DogName.Contains(searchBar.Text))
+                for (int i = 0; i < dogsTemp.Count; i++)
                 {
-                    dogsTemp.RemoveAt(i);
-                    i--;
-                } 
+                    if (!dogsTemp[i].DogName.Contains(searchBar.Text))
+                    {
+                        dogsTemp.RemoveAt(i);
+                        i--;
+                    }
+                }
+                searchBarText++;
+            }
+            else
+            {
+                //TODO: For some reason it's deleting it one behind figure it out.
+				dogsTemp = new ObservableCollection<Dog>(dogs);
+
+                if (searchBar.Text.Length == 0)
+                {
+                    damsList.ItemsSource = dogs;
+                    searchBarText = 0;
+                }
+                else
+                {
+					for (int i = 0; i < dogsTemp.Count; i++)
+					{
+						if (!dogsTemp[i].DogName.Contains(searchBar.Text))
+						{
+							dogsTemp.RemoveAt(i);
+							i--;
+						}
+					}
+                }
+                searchBarText--;
             }
         }
     }
