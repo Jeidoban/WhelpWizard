@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Plugin.Share;
+using Newtonsoft.Json;
 
 using Xamarin.Forms;
 
@@ -30,12 +32,30 @@ namespace WhelpWizard
             {
                 stepperRight.IsEnabled = false;
             }
+            ToolbarItem thing = new ToolbarItem();
+
+            ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleActionAsync, ToolbarItemOrder.Default));
+            ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => DisplayAlert("Clicked", "Clicked Share", "ok"), ToolbarItemOrder.Default));
+
+
+        
 			//stepper.Value = getCurrentDate();
 			//stepper.Minimum = 1;
 			//stepper.Maximum = 6;
         }
-
         public DamInformation() { }
+
+        async void HandleActionAsync()
+        {
+            //TODO: make this so it shares dog info.
+            var messageToSend = new Plugin.Share.Abstractions.ShareMessage
+            {
+                Title = "YAY",
+                Text = "WOO"
+            };
+
+            await CrossShare.Current.Share(messageToSend);
+        }
 
         //This works the same way as the one in the calculator class.
         public void PregnancyCases() 

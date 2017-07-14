@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
@@ -31,18 +32,21 @@ namespace WhelpWizard
             this.dogs.Add(dog);   
         }
 
-        // I needed to get the index of the item in the list so I could delete it from the list. 
-        // After like 4 hours of trying to figure it out, I found out I could get the object the
-        // menu item is attatched to. So I decided to add a list counter variable in the dog class.
-        // Now this code will pull the right index from the list.
-		void OnDelete(object sender, System.EventArgs e)
-		{
-            var mi = ((MenuItem)sender); 
+        async void OnDeleteAsync(object sender, System.EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
             Dog getInfo = (Dog)mi.BindingContext;
             int index = getInfo.PlaceInList;
 
-            SaveAndLoad.DeleteCell(dogs, index);
-		}
+            var decision = await DisplayActionSheet("Are you sure you want to delete " + getInfo.DogName + "?", "Cancel", "Delete");
+
+            if (decision == "Delete")
+            {
+                await SaveAndLoad.DeleteCell(dogs, index);
+                damsList.ItemsSource = dogs;
+                searchBar.Text = "";
+            }
+        }
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
@@ -54,42 +58,34 @@ namespace WhelpWizard
         //TODO: Make it so when you add a letter a remove loop runs and when you remove a letter an add loop runs.
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            damsList.ItemsSource = dogsTemp;
-
-            if (searchBarText < searchBar.Text.Length)
+            try
             {
-                for (int i = 0; i < dogsTemp.Count; i++)
+                if (searchBar.Text.Length != 0)
                 {
-                    if (!dogsTemp[i].DogName.Contains(searchBar.Text))
+                    List<Dog> tempDogList = new List<Dog>(dogs);
+                    tempDogList = tempDogList.FindAll(dog =>
                     {
-                        dogsTemp.RemoveAt(i);
-                        i--;
-                    }
-                }
-                searchBarText++;
-            }
-            else
-            {
-                //TODO: For some reason it's deleting it one behind figure it out.
-				dogsTemp = new ObservableCollection<Dog>(dogs);
+                        if (dog.DogName.ToUpper().Contains(searchBar.Text.ToUpper()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    });
 
-                if (searchBar.Text.Length == 0)
-                {
-                    damsList.ItemsSource = dogs;
-                    searchBarText = 0;
+                    dogsTemp = new ObservableCollection<Dog>(tempDogList);
+                    damsList.ItemsSource = dogsTemp;
                 }
                 else
                 {
-					for (int i = 0; i < dogsTemp.Count; i++)
-					{
-						if (!dogsTemp[i].DogName.Contains(searchBar.Text))
-						{
-							dogsTemp.RemoveAt(i);
-							i--;
-						}
-					}
+                    damsList.ItemsSource = dogs;
                 }
-                searchBarText--;
+            }
+            catch (Exception ex)
+            {
+                searchBar.Text = "";
             }
         }
     }

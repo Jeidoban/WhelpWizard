@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.ListOfDams" Title="List of Dams" BackgroundColor="#D9DCD6">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.ListOfDams"  Title="List of Dams" BackgroundColor="#D9DCD6">
     <StackLayout>
-        <SearchBar BackgroundColor="#D9DCD6" Placeholder="Search for a dam" TextChanged="Handle_TextChanged" x:Name="searchBar"></SearchBar>
+        <SearchBar BackgroundColor="#D9DCD6" Placeholder="Search for a dam" TextChanged="Handle_TextChanged" x:Name="searchBar" ></SearchBar>
     	<ListView x:Name="damsList" ItemTapped="Handle_ItemSelected" BackgroundColor="#D9DCD6" SeparatorColor="#493843">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell x:Name="cell">
                          <ViewCell.ContextActions>
                             <MenuItem CommandParameter="{Binding .}"
-                               Text="Delete" IsDestructive="True" x:Name="delete" Clicked="OnDelete" />
+                               Text="Delete" IsDestructive="True" x:Name="delete" Clicked="OnDeleteAsync" />
                          </ViewCell.ContextActions>
                          <StackLayout Padding="15,0">
                              <Label Text="{Binding DogName}" TextColor="#61988E" />
