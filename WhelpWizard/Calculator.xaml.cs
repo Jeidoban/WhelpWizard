@@ -9,6 +9,10 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using Plugin.LocalNotifications;
 using PCLStorage;
+using Acr.UserDialogs;
+using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Extensions;
 
 namespace WhelpWizard
 {
@@ -19,6 +23,7 @@ namespace WhelpWizard
 		ListOfDams list; // This is the list of Dams page.
         Dog dog; // Holds information on a dog.
         //ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
+
 
         // I'm just initializing most of the XAML elemnts here.
         public Calculator(ListOfDams list)
@@ -127,9 +132,9 @@ namespace WhelpWizard
 		}
 
         //This will push the user to the dams list page.
-        void GoToMore(object sender, System.EventArgs e)
+        async void GoToMoreAsync(object sender, System.EventArgs e)
 		{
-			//Navigation.PushAsync(list);
+            await Navigation.PushModalAsync(new Vaccinations(this), true);
 		}
 
         //Fires when the dog name is changed. Changes the "Dam is Due" label to "'dog name' is due".

@@ -15,6 +15,8 @@ namespace WhelpWizard.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            //UserDialogs.Init(this);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

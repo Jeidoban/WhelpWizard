@@ -24,7 +24,7 @@
         <StackLayout VerticalOptions="FillAndExpand">
         </StackLayout>
         <StackLayout Orientation="Horizontal">
-            <Button HorizontalOptions="StartAndExpand" Text="More" Margin="12, -10, -10, 20" Clicked="GoToMore" BackgroundColor="#61988E" WidthRequest="63" TextColor="White">
+            <Button HorizontalOptions="StartAndExpand" Text="More" Margin="12, -10, -10, 20" Clicked="GoToMoreAsync" BackgroundColor="#61988E" WidthRequest="63" TextColor="White">
                 <Button.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
                         <OnPlatform.Android>Hind-Regular.ttf#Hind-Regular</OnPlatform.Android>
