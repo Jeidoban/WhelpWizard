@@ -19,9 +19,10 @@ namespace WhelpWizard
             InitializeComponent();
         }
 
+        public Vaccinations() {}
+
         void Handle_Clicked(object sender, System.EventArgs e)
         {
-            DisplayAlert("Vaccine Information Added", "Press save to save dog information","Ok");
             Navigation.PopModalAsync(true);
         }
     }

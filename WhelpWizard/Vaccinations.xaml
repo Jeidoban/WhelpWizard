@@ -2,8 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.Vaccinations" BackgroundColor="#D9DCD6">
 	<ContentPage.Content>
         <StackLayout>
-            <Label Text="Optional Vaccine Information" HorizontalOptions="CenterAndExpand" Margin="0, 20, 0, 0"/>
-            <Button Text="Add information to dam" Clicked="Handle_Clicked"></Button>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#61988E">
+                <Button Text="╳" HorizontalOptions="Start" FontAttributes="Bold" Margin="10, 20, 0, 0" TextColor="#D9DCD6" Clicked="Handle_Clicked"/>
+                <Label Text="Optional Vaccine Information" HorizontalOptions="CenterAndExpand" TextColor="#D9DCD6" Margin="0, 30, -10, 0"></Label>
+                <StackLayout HorizontalOptions="EndAndExpand"></StackLayout>
+            </StackLayout>
+            <Label Text="Vaccine Name" TextColor="#61988E" HorizontalOptions="CenterAndExpand"></Label>
+           <!--<Entry BackgroundColor="#61988E" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"></Entry>-->
+            <Picker BackgroundColor="#D9DCD6" WidthRequest="200" HorizontalOptions="CenterAndExpand"></Picker>
+
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

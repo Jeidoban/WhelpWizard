@@ -29,8 +29,6 @@ namespace WhelpWizard
         public Calculator(ListOfDams list)
         {
             InitializeComponent();
-            //saveLoad = new SaveAndLoad();
-            //dogList = new ObservableCollection<Dog>(); // This needs to be initialized on app startup, regardless on what page it starts on.
             this.list = list;
             dogName.Text = "";
 			dogIsDue.Text = "Dam is Due: ";
@@ -38,10 +36,6 @@ namespace WhelpWizard
             pregnancyInfo.Text = PregnancyInfo.firstStage;
             stepperLeft.IsEnabled = false;
             PregnancyCases();
-            //stepper.Value = 1;
-            //stepper.Minimum = 1;
-            //stepper.Maximum = 6;
-            //stepper.Increment = 1;
         }
 
         public Calculator() {}
@@ -131,10 +125,10 @@ namespace WhelpWizard
 			PregnancyCases();
 		}
 
-        //This will push the user to the dams list page.
+        //This will push the user to the Vaccinations page
         async void GoToMoreAsync(object sender, System.EventArgs e)
 		{
-            await Navigation.PushModalAsync(new Vaccinations(this), true);
+            await Navigation.PushModalAsync(new Vaccinations(this));
 		}
 
         //Fires when the dog name is changed. Changes the "Dam is Due" label to "'dog name' is due".
