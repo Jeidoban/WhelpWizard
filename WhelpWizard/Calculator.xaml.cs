@@ -128,7 +128,7 @@ namespace WhelpWizard
         //This will push the user to the Vaccinations page
         async void GoToMoreAsync(object sender, System.EventArgs e)
 		{
-            await Navigation.PushModalAsync(new Vaccinations(this));
+            //await Navigation.PushModalAsync(new Vaccinations(this));
 		}
 
         //Fires when the dog name is changed. Changes the "Dam is Due" label to "'dog name' is due".

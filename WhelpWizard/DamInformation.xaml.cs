@@ -11,14 +11,16 @@ namespace WhelpWizard
     {
         string dogName;
         DateTime breedingDate;
+        Dog currentDog;
         int stepperValue;
 
-        public DamInformation(string dogName, DateTime breedingDate)
+        public DamInformation(Dog currentDog)
         {
             InitializeComponent();
 
-            this.dogName = dogName;
-            this.breedingDate = breedingDate;
+            this.currentDog = currentDog;
+            this.dogName = currentDog.DogName;
+            this.breedingDate = currentDog.BreedingDate;
             damName.Text = dogName;
             pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
             breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
@@ -34,7 +36,7 @@ namespace WhelpWizard
             }
             ToolbarItem thing = new ToolbarItem();
 
-            ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleActionAsync, ToolbarItemOrder.Default));
+            ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleShareActionAsync, ToolbarItemOrder.Default));
             ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => DisplayAlert("Clicked", "Clicked Share", "ok"), ToolbarItemOrder.Default));
 
 
@@ -43,9 +45,10 @@ namespace WhelpWizard
 			//stepper.Minimum = 1;
 			//stepper.Maximum = 6;
         }
+
         public DamInformation() { }
 
-        async void HandleActionAsync()
+        async void HandleShareActionAsync()
         {
             //TODO: make this so it shares dog info.
             var messageToSend = new Plugin.Share.Abstractions.ShareMessage
@@ -56,6 +59,11 @@ namespace WhelpWizard
 
             await CrossShare.Current.Share(messageToSend);
         }
+
+		async void GoToMoreAsync(object sender, System.EventArgs e)
+		{
+            await Navigation.PushModalAsync(new Vaccinations(currentDog));
+		}
 
         //This works the same way as the one in the calculator class.
         public void PregnancyCases() 

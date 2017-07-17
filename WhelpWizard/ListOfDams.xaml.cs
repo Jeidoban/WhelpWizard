@@ -50,9 +50,10 @@ namespace WhelpWizard
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            string dogName = ((Dog)e.Item).DogName; //This is how you get data from a cell!!!!
-            DateTime breedingDate = ((Dog)e.Item).BreedingDate;
-			Navigation.PushAsync(new DamInformation(dogName, breedingDate));
+            //string dogName = ((Dog)e.Item).DogName; 
+            //DateTime breedingDate = ((Dog)e.Item).BreedingDate;
+            Dog currentDog = ((Dog)e.Item); //This is how you get data from a cell!!!!
+            Navigation.PushAsync(new DamInformation(currentDog));
         }
 
         //TODO: Make it so when you add a letter a remove loop runs and when you remove a letter an add loop runs.
