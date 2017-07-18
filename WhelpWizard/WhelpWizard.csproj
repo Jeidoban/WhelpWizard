@@ -42,6 +42,9 @@
     <EmbeddedResource Include="Vaccinations.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="VaccineList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -67,6 +70,10 @@
     <Compile Include="Vaccinations.xaml.cs">
       <DependentUpon>Vaccinations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VaccineList.xaml.cs">
+      <DependentUpon>VaccineList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vaccine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

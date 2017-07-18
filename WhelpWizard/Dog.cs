@@ -20,7 +20,7 @@ namespace WhelpWizard
         }
         public int PlaceInList { get; set; }
         public bool VaccineInfoAdded { get; set; }
-        public List<string> vaccineList { get; set; }
+        public List<Vaccine> vaccineList { get; set; }
 
         public Dog(string dogName, DateTime breedingDate, int placeInList)
         {

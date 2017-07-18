@@ -34,7 +34,6 @@ namespace WhelpWizard
             {
                 stepperRight.IsEnabled = false;
             }
-            ToolbarItem thing = new ToolbarItem();
 
             ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleShareActionAsync, ToolbarItemOrder.Default));
             ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => DisplayAlert("Clicked", "Clicked Share", "ok"), ToolbarItemOrder.Default));
@@ -62,7 +61,7 @@ namespace WhelpWizard
 
 		async void GoToMoreAsync(object sender, System.EventArgs e)
 		{
-            await Navigation.PushModalAsync(new Vaccinations(currentDog));
+            await Navigation.PushAsync(new VaccineList(currentDog));
 		}
 
         //This works the same way as the one in the calculator class.
