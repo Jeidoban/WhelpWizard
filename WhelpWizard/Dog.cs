@@ -19,7 +19,6 @@ namespace WhelpWizard
 			}
         }
         public int PlaceInList { get; set; }
-        public bool VaccineInfoAdded { get; set; }
         public List<Vaccine> vaccineList { get; set; }
 
         public Dog(string dogName, DateTime breedingDate, int placeInList)
@@ -28,7 +27,7 @@ namespace WhelpWizard
             this.DogName = dogName;
             this.BreedingDate = breedingDate;
             this.PlaceInList = placeInList;
-            this.VaccineInfoAdded = false;
+            vaccineList = new List<Vaccine>();
         }
     }
 }

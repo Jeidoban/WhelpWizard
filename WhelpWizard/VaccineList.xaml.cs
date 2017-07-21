@@ -8,8 +8,8 @@ namespace WhelpWizard
 {
     public partial class VaccineList : ContentPage
     {
-        ObservableCollection<Vaccine> vaccineList;
-        Dog currentDog;
+        public ObservableCollection<Vaccine> vaccineList;
+        public Dog currentDog;
 
         public VaccineList(Dog currentDog)
         {

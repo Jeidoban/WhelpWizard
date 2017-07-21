@@ -13,6 +13,7 @@ namespace WhelpWizard
         DateTime breedingDate;
         Dog currentDog;
         int stepperValue;
+        VaccineList vacList;
 
         public DamInformation(Dog currentDog)
         {
@@ -26,6 +27,7 @@ namespace WhelpWizard
             breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
             DaysLeft();
             stepperValue = getCurrentDate();
+            vacList = new VaccineList(currentDog);
 
             if (stepperValue == 1)
             {
@@ -61,7 +63,7 @@ namespace WhelpWizard
 
 		async void GoToMoreAsync(object sender, System.EventArgs e)
 		{
-            await Navigation.PushAsync(new VaccineList(currentDog));
+            await Navigation.PushAsync(vacList);
 		}
 
         //This works the same way as the one in the calculator class.

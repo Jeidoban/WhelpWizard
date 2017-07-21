@@ -13,6 +13,8 @@ namespace WhelpWizard
                 return VaccineDate.ToString("ddd, MMM d, yyyy");
             }
         }
+        public DateTime VaccineRemind { get; set; }
+        public String Notes { get; set; }
 
         public Vaccine()
         {

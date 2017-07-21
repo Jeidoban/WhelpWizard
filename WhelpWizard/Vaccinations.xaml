@@ -7,11 +7,23 @@
                 <Label Text="Add Additional Information" HorizontalOptions="CenterAndExpand" TextColor="#D9DCD6" Margin="0, 30, -10, 0"></Label>
                 <StackLayout HorizontalOptions="EndAndExpand"></StackLayout>
             </StackLayout>
-            <Label Text="Vaccine Name:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 10, 0 ,0"></Label>
+            <Label Text="Vaccine or medication name:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 10, 0 ,0"></Label>
             <Picker BackgroundColor="#D9DCD6" x:Name="vaccineName" WidthRequest="275" HorizontalOptions="CenterAndExpand"></Picker>
-            <StackLayout VerticalOptions="FillAndExpand">
+            <Label Text="Date of vaccine or medication:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0 ,0"></Label>
+            <DatePicker x:Name="picker" BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
+            <Label Text="Do you want to be reminded?" HorizontalOptions="CenterAndExpand" TextColor="#61988E"></Label>
+            <Switch x:Name="switchForRemind" BackgroundColor="#D9DCD6" HorizontalOptions="CenterAndExpand" Toggled="Handle_Toggled"></Switch>
+            <StackLayout HorizontalOptions="CenterAndExpand" x:Name="hideElements" IsVisible="false">
+                <Label Text="Date to be reminded:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0 ,0"></Label>
+                <DatePicker x:Name="pickerRemind" BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
             </StackLayout>
-            <Button HorizontalOptions="CenterAndExpand" TextColor="White" BackgroundColor="#61988E" Margin="0, 0, 0, 12" WidthRequest="250" Clicked="AddButtonClicked" x:Name="saveButton"></Button>
+            <StackLayout VerticalOptions="FillAndExpand">
+                <Label Text="Notes:" HorizontalOptions="CenterAndExpand" TextColor="#61988E"></Label>
+                <StackLayout HeightRequest="1" WidthRequest="325" HorizontalOptions="CenterAndExpand" BackgroundColor="#C0C0C0"></StackLayout>
+                <Editor VerticalOptions="FillAndExpand" x:Name="notes" BackgroundColor="#D9DCD6" HorizontalOptions="CenterAndExpand" WidthRequest="325" TextColor="#61988E"></Editor>
+            </StackLayout>
+            <StackLayout HeightRequest="1" WidthRequest="325" HorizontalOptions="CenterAndExpand" BackgroundColor="#C0C0C0"></StackLayout>
+            <Button HorizontalOptions="CenterAndExpand" TextColor="White" BackgroundColor="#61988E" Margin="0, 10, 0, 12" WidthRequest="250" Clicked="AddButtonClicked" x:Name="saveButton"></Button>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
