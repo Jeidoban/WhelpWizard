@@ -14,6 +14,7 @@ namespace WhelpWizard
     {
         Dog currentDog;
         ObservableCollection<String> vacList;
+        bool editMode;
         VaccineList list;
         Vaccine vac;
 
@@ -21,20 +22,40 @@ namespace WhelpWizard
         // in the top right corner. Also create a vaccine class that holds all info 
         // needed for a vaccine and/or medication.
 
-        public Vaccinations(Dog currentDog, VaccineList list)
+        public Vaccinations(Dog currentDog)
         {
             InitializeComponent();
             this.currentDog = currentDog;
-            this.list = list;
             vac = new Vaccine();
             saveButton.Text = "Save information to " + currentDog.DogName;
             vacList = new ObservableCollection<String>();
             //ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => DisplayAlert("Clicked", "Clicked Share", "ok"), ToolbarItemOrder.Default));
             //vaccineList.ItemsSource = test;
+            pickerRemind = null;
             vacList.Add("Create New");
-            vacList.Add("Heart Disease");
+            vacList.Add("test 1");
             vaccineName.ItemsSource = vacList;
         }
+
+        public Vaccinations(Dog currentDog, Vaccine vac)
+        {
+			InitializeComponent();
+            editMode = true;
+			this.currentDog = currentDog;
+            this.vac = vac;
+			vacList = new ObservableCollection<String>();
+			vacList.Add("Create New");
+			vacList.Add("test 1");
+
+
+			if (vac.VaccineRemind != null) switchForRemind.IsToggled = true;
+			vaccineName.ItemsSource = vacList;
+			saveButton.Text = "Save information to " + currentDog.DogName;
+            picker.Date = vac.VaccineDate;
+            vaccineName.SelectedItem = vac.VaccineName;
+            pickerRemind.Date = vac.VaccineRemind;
+            notes.Text = vac.Notes;
+		}
          
         public Vaccinations() {}
 
@@ -49,10 +70,11 @@ namespace WhelpWizard
                 vac.VaccineRemind = pickerRemind.Date;
 
             vac.VaccineDate = picker.Date;
-            vac.VaccineName = vaccineName.SelectedItem.ToString();
+            vac.VaccineName = vaccineName.SelectedItem;
             vac.Notes = notes.Text;
-            currentDog.vaccineList.Add(vac);
-            list.vaccineList.Add(vac);
+            if (!editMode) currentDog.vaccineList.Add(vac);
+            SaveAndLoad.OverwriteFile(currentDog);
+           //list.vaccineList.Add(vac);
             Navigation.PopModalAsync(true);
         }
 

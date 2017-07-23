@@ -10,7 +10,8 @@
             <Label Text="Vaccine or medication name:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 10, 0 ,0"></Label>
             <Picker BackgroundColor="#D9DCD6" x:Name="vaccineName" WidthRequest="275" HorizontalOptions="CenterAndExpand"></Picker>
             <Label Text="Date of vaccine or medication:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0 ,0"></Label>
-            <DatePicker x:Name="picker" BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
+
+            <DatePicker x:Name="picker"  BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
             <Label Text="Do you want to be reminded?" HorizontalOptions="CenterAndExpand" TextColor="#61988E"></Label>
             <Switch x:Name="switchForRemind" BackgroundColor="#D9DCD6" HorizontalOptions="CenterAndExpand" Toggled="Handle_Toggled"></Switch>
             <StackLayout HorizontalOptions="CenterAndExpand" x:Name="hideElements" IsVisible="false">

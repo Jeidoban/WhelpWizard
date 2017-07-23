@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace WhelpWizard
 {
@@ -19,7 +20,7 @@ namespace WhelpWizard
 			}
         }
         public int PlaceInList { get; set; }
-        public List<Vaccine> vaccineList { get; set; }
+        public ObservableCollection<Vaccine> vaccineList { get; set; }
 
         public Dog(string dogName, DateTime breedingDate, int placeInList)
         {
@@ -27,7 +28,7 @@ namespace WhelpWizard
             this.DogName = dogName;
             this.BreedingDate = breedingDate;
             this.PlaceInList = placeInList;
-            vaccineList = new List<Vaccine>();
+            vaccineList = new ObservableCollection<Vaccine>();
         }
     }
 }

@@ -162,7 +162,6 @@ namespace WhelpWizard
             }
             else
             {
-
                 dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
                 Notifications(picker.Date, dogName.Text);
                 SaveAndLoad.SaveNotificationId();

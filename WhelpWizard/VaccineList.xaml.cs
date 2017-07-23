@@ -8,15 +8,13 @@ namespace WhelpWizard
 {
     public partial class VaccineList : ContentPage
     {
-        public ObservableCollection<Vaccine> vaccineList;
         public Dog currentDog;
 
         public VaccineList(Dog currentDog)
         {
             InitializeComponent();
             this.currentDog = currentDog;
-            vaccineList = new ObservableCollection<Vaccine>();
-            vaccineListShow.ItemsSource = vaccineList;
+            vaccineListShow.ItemsSource = currentDog.vaccineList;
             string plus = "+";
             ToolbarItems.Add(new ToolbarItem(plus, null, HandleAction, ToolbarItemOrder.Default));
         }
@@ -27,11 +25,13 @@ namespace WhelpWizard
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
+            Vaccine currentVaccine = ((Vaccine)e.Item);
+            Navigation.PushModalAsync(new Vaccinations(currentDog, currentVaccine));
         }
 
         void HandleAction()
         {
-            Navigation.PushModalAsync(new Vaccinations(currentDog, this));
+            Navigation.PushModalAsync(new Vaccinations(currentDog));
         }
     }
 }

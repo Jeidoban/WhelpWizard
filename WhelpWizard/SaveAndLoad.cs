@@ -28,6 +28,14 @@ namespace WhelpWizard
             fileNumber++;
         }
 
+		public static async Task OverwriteFile(Dog dog)
+		{
+			string json = JsonConvert.SerializeObject(dog); // Convert Dog C# object to json.
+			IFolder rootFolder = FileSystem.Current.LocalStorage; // get device storage.
+            IFile file = rootFolder.CreateFileAsync("dog" + dog.PlaceInList, CreationCollisionOption.ReplaceExisting).Result; // create folder.
+			await file.WriteAllTextAsync(json); // write json to file.
+		}
+
         public static async Task<ObservableCollection<Dog>> LoadFromfile(ObservableCollection<Dog> dog)
         {
             IFolder rootFolder = FileSystem.Current.LocalStorage;// Get device storage.
@@ -63,6 +71,8 @@ namespace WhelpWizard
                 index++; // increment the index.
 			}
         }
+
+
 
         public static void SaveNotificationId()
         {
