@@ -21,6 +21,7 @@ namespace WhelpWizard
         }
         public int PlaceInList { get; set; }
         public ObservableCollection<Vaccine> vaccineList { get; set; }
+        public int TotalVaccines { get; set; }
 
         public Dog(string dogName, DateTime breedingDate, int placeInList)
         {

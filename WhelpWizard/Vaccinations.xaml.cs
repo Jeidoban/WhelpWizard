@@ -15,12 +15,7 @@ namespace WhelpWizard
         Dog currentDog;
         ObservableCollection<String> vacList;
         bool editMode;
-        VaccineList list;
         Vaccine vac;
-
-        //TODO: I would reccomend creating a list that holds vaccines with a plus button 
-        // in the top right corner. Also create a vaccine class that holds all info 
-        // needed for a vaccine and/or medication.
 
         public Vaccinations(Dog currentDog)
         {
@@ -29,10 +24,10 @@ namespace WhelpWizard
             vac = new Vaccine();
             saveButton.Text = "Save information to " + currentDog.DogName;
             vacList = new ObservableCollection<String>();
-            //ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => DisplayAlert("Clicked", "Clicked Share", "ok"), ToolbarItemOrder.Default));
-            //vaccineList.ItemsSource = test;
-            pickerRemind = null;
-            vacList.Add("Create New");
+			pickerRemind.MaximumDate = picker.Date;
+            pickerRemind.MinimumDate = DateTime.Today;
+			picker.MinimumDate = DateTime.Today;
+			vacList.Add("Create New");
             vacList.Add("test 1");
             vaccineName.ItemsSource = vacList;
         }
@@ -47,13 +42,20 @@ namespace WhelpWizard
 			vacList.Add("Create New");
 			vacList.Add("test 1");
 
-
-			if (vac.VaccineRemind != null) switchForRemind.IsToggled = true;
 			vaccineName.ItemsSource = vacList;
 			saveButton.Text = "Save information to " + currentDog.DogName;
             picker.Date = vac.VaccineDate;
-            vaccineName.SelectedItem = vac.VaccineName;
-            pickerRemind.Date = vac.VaccineRemind;
+            picker.MinimumDate = DateTime.Today;
+            pickerRemind.MaximumDate = picker.Date;
+			pickerRemind.MinimumDate = DateTime.Today;
+
+			if (vac.VaccineRemind != DateTime.MinValue) 
+            {
+                switchForRemind.IsToggled = true;
+                pickerRemind.Date = vac.VaccineRemind;
+            }
+
+			vaccineName.SelectedItem = vac.VaccineName;
             notes.Text = vac.Notes;
 		}
          
@@ -66,26 +68,33 @@ namespace WhelpWizard
 
         void AddButtonClicked(object sender, System.EventArgs e)
         {
-            if (pickerRemind.IsVisible)
+            
+            if (hideElements.IsVisible)
                 vac.VaccineRemind = pickerRemind.Date;
+            else
+                vac.VaccineRemind = DateTime.MinValue;
 
             vac.VaccineDate = picker.Date;
             vac.VaccineName = vaccineName.SelectedItem;
             vac.Notes = notes.Text;
+            vac.itemInList = currentDog.TotalVaccines;
             if (!editMode) currentDog.vaccineList.Add(vac);
             SaveAndLoad.OverwriteFile(currentDog);
-           //list.vaccineList.Add(vac);
+            currentDog.TotalVaccines++;
             Navigation.PopModalAsync(true);
         }
 
         void Handle_Toggled(object sender, Xamarin.Forms.ToggledEventArgs e)
         {
             if (switchForRemind.IsToggled)
-            {
                 hideElements.IsVisible = true;
-            } else {
+            else
                 hideElements.IsVisible = false;
-            }
         }
+
+        void Handle_DateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
+        {
+            pickerRemind.MaximumDate = picker.Date;
+		}
     }
 }

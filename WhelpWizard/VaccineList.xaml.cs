@@ -33,5 +33,25 @@ namespace WhelpWizard
         {
             Navigation.PushModalAsync(new Vaccinations(currentDog));
         }
+
+        async void Handle_ClickedAsync(object sender, System.EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            Vaccine getInfo = (Vaccine)mi.BindingContext;
+            int index = getInfo.itemInList;
+
+            var decision = await DisplayActionSheet("Are you sure you want to delete " + getInfo.VaccineNameString + "?", "Cancel", "Delete");
+
+            //TODO: This doesn't work all the way yet, 
+            if (decision == "Delete")
+            {
+                currentDog.vaccineList.RemoveAt(index); // Getting negative index here.
+
+                for (int i = index; i < currentDog.vaccineList.Count; i++)
+                {
+                    currentDog.vaccineList[i].itemInList--;
+                }
+            }
+        }
     }
 }
