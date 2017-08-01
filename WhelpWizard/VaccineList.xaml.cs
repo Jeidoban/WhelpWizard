@@ -42,16 +42,16 @@ namespace WhelpWizard
 
             var decision = await DisplayActionSheet("Are you sure you want to delete " + getInfo.VaccineNameString + "?", "Cancel", "Delete");
 
-            //TODO: This doesn't work all the way yet, 
             if (decision == "Delete")
             {
-                currentDog.vaccineList.RemoveAt(index); // Getting negative index here.
-
-                for (int i = index; i < currentDog.vaccineList.Count; i++)
+                for (int i = index + 1; i < currentDog.vaccineList.Count; i++)
                 {
                     currentDog.vaccineList[i].itemInList--;
-                }
-            }
+				}
+                //Almost there
+				currentDog.vaccineList.RemoveAt(index);
+                currentDog.TotalVaccines = currentDog.vaccineList.Count;
+			}
         }
     }
 }
