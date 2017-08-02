@@ -51,6 +51,7 @@ namespace WhelpWizard
                 //Almost there
 				currentDog.vaccineList.RemoveAt(index);
                 currentDog.TotalVaccines = currentDog.vaccineList.Count;
+                SaveAndLoad.OverwriteFile(currentDog);
 			}
         }
     }

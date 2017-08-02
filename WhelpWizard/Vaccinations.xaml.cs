@@ -7,13 +7,13 @@ using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using Acr.UserDialogs;
 
 namespace WhelpWizard
 {
     public partial class Vaccinations : ContentPage
     {
         Dog currentDog;
-        ObservableCollection<String> vacList;
         bool editMode;
         Vaccine vac;
 
@@ -23,13 +23,11 @@ namespace WhelpWizard
             this.currentDog = currentDog;
             vac = new Vaccine();
             saveButton.Text = "Save information to " + currentDog.DogName;
-            vacList = new ObservableCollection<String>();
 			pickerRemind.MaximumDate = picker.Date;
             pickerRemind.MinimumDate = DateTime.Today;
-			picker.MinimumDate = DateTime.Today;
-			vacList.Add("Create New");
-            vacList.Add("test 1");
-            vaccineName.ItemsSource = vacList;
+            picker.MinimumDate = DateTime.Today;
+            vaccineName.ItemsSource = AddedVaccineList.AddedVaccines;
+            AddedVaccineList.AddedVaccines.Add("Create New");
         }
 
         public Vaccinations(Dog currentDog, Vaccine vac)
@@ -38,11 +36,7 @@ namespace WhelpWizard
             editMode = true;
 			this.currentDog = currentDog;
             this.vac = vac;
-			vacList = new ObservableCollection<String>();
-			vacList.Add("Create New");
-			vacList.Add("test 1");
-
-			vaccineName.ItemsSource = vacList;
+            vaccineName.ItemsSource = AddedVaccineList.AddedVaccines;
 			saveButton.Text = "Save information to " + currentDog.DogName;
             picker.Date = vac.VaccineDate;
             picker.MinimumDate = DateTime.Today;
@@ -90,6 +84,25 @@ namespace WhelpWizard
                 hideElements.IsVisible = true;
             else
                 hideElements.IsVisible = false;
+        }
+
+        void Handle_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            // Need to configure on cancel, right now it's sending even if it's cancelling. 
+            if (vaccineName.SelectedItem.ToString().Equals("Create New"))
+            {
+                UserDialogs.Instance.Prompt(new PromptConfig
+                {
+                    Title = "Please enter a vaccine or medication name.",
+                    OnAction = new Action<PromptResult>( (obj) => 
+                    {
+                        if (obj.Text.Length != 0)
+                        {
+							AddedVaccineList.AddedVaccines.Add(obj.Text);
+						}
+                    })
+                });
+            }
         }
 
         void Handle_DateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)

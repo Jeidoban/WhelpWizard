@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Acr.UserDialogs;
 
 namespace WhelpWizard.Droid
 {
@@ -15,7 +16,7 @@ namespace WhelpWizard.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
-            //UserDialogs.Init(this);
+            UserDialogs.Init(this);
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;

@@ -8,7 +8,7 @@
                 <StackLayout HorizontalOptions="EndAndExpand"></StackLayout>
             </StackLayout>
             <Label Text="Vaccine or medication name:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 10, 0 ,0"></Label>
-            <Picker BackgroundColor="#D9DCD6" x:Name="vaccineName" WidthRequest="275" HorizontalOptions="CenterAndExpand"></Picker>
+            <Picker BackgroundColor="#D9DCD6" x:Name="vaccineName" WidthRequest="275" HorizontalOptions="CenterAndExpand" SelectedIndexChanged="Handle_SelectedIndexChanged"></Picker>
             <Label Text="Date of vaccine or medication:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0 ,0"></Label>
 
             <DatePicker x:Name="picker" DateSelected="Handle_DateSelected" BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
