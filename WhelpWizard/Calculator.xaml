@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.Calculator" Title="Add a Dam" BackgroundColor="#D9DCD6">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Name="conPage" x:Class="WhelpWizard.Calculator" Title="Add a Dam" BackgroundColor="#D9DCD6">
 	<StackLayout Orientation="Vertical" Margin="0, 10, 0, 0" x:Name="stack" >
+        <StackLayout Orientation="Horizontal" BackgroundColor="#61988E" x:Name="editBar" IsVisible="false" Margin="0, -10, 0, 0">
+                <Button Text="╳" HorizontalOptions="Start" FontAttributes="Bold" Margin="10, 20, 0, 0" TextColor="#D9DCD6" Clicked="Handle_Clicked"/>
+                <Label Text="Edit a Dam" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" TextColor="#D9DCD6" Margin="40, 30, 0, 0"></Label>
+                <StackLayout HorizontalOptions="EndAndExpand"></StackLayout>
+            </StackLayout>
         <StackLayout Orientation="Horizontal">
             <StackLayout Orientation="Vertical" HorizontalOptions="Start" Margin="10, 0, 0, 0">
                 <Label Text="Enter a name:" HorizontalOptions="Center" TextColor="#61988E"/>
@@ -17,14 +22,14 @@
         </StackLayout>
 
         <StackLayout Margin="0, 20, 0, 0">
-            <Label Text="Milestones:" HorizontalOptions="Center" FontAttributes="Bold" FontSize="20" TextColor="#61988E"/>
+            <Label Text="Milestones:" HorizontalOptions="Center" x:Name="milestonesLabel" FontAttributes="Bold" FontSize="20" TextColor="#61988E"/>
             <Label HorizontalOptions="Center" x:Name="timeSpan"></Label>
             <Label Margin="10, 0, 0, 0" HorizontalOptions="Center" x:Name="pregnancyInfo" LineBreakMode="WordWrap" FontSize="15"></Label>
         </StackLayout>
         <StackLayout VerticalOptions="FillAndExpand">
         </StackLayout>
         <StackLayout Orientation="Horizontal">
-            <Button HorizontalOptions="StartAndExpand" Text="More" Margin="12, -10, -10, 20" Clicked="GoToMoreAsync" BackgroundColor="#61988E" WidthRequest="63" TextColor="White">
+            <Button HorizontalOptions="StartAndExpand" IsVisible="false" Text="More" Margin="12, -10, -10, 20" Clicked="GoToMoreAsync" BackgroundColor="#61988E" WidthRequest="63" TextColor="White">
                 <Button.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
                         <OnPlatform.Android>Hind-Regular.ttf#Hind-Regular</OnPlatform.Android>

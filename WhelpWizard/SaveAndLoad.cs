@@ -72,8 +72,6 @@ namespace WhelpWizard
 			}
         }
 
-
-
         public static void SaveNotificationId()
         {
             notificationId += 6;

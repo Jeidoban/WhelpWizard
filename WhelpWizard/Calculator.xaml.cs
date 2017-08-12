@@ -22,6 +22,8 @@ namespace WhelpWizard
         int stepperValue = 1;
 		ListOfDams list; // This is the list of Dams page.
         Dog dog; // Holds information on a dog.
+        bool editMode;
+        DamInformation damInfo;
         //ObservableCollection<Dog> dogList; // A list of dogs. Used for populating the List of dams page.
 
 
@@ -36,6 +38,27 @@ namespace WhelpWizard
             pregnancyInfo.Text = PregnancyInfo.firstStage;
             stepperLeft.IsEnabled = false;
             PregnancyCases();
+        }
+
+        public void RefreshPage() {
+			InitializeComponent();
+		}
+
+        public Calculator(Dog currentDog, DamInformation damInfo)
+        {
+			InitializeComponent();
+            editBar.IsVisible = true;
+            this.damInfo = damInfo;
+			dog = currentDog;
+            editMode = true;
+            picker.Date = dog.BreedingDate;
+            calculatedDate.Text = CalculateDate.NumberOfDays(dog.BreedingDate, 63);
+            milestonesLabel.IsVisible = false;
+            pregnancyInfo.IsVisible = false;
+            stepperLeft.IsVisible = false;
+            stepperRight.IsVisible = false;
+            timeSpan.IsVisible = false;
+			dogName.Text = dog.DogName;
         }
 
         public Calculator() {}
@@ -125,6 +148,11 @@ namespace WhelpWizard
 			PregnancyCases();
 		}
 
+        void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PopModalAsync();
+        }
+
         //This will push the user to the Vaccinations page
         async void GoToMoreAsync(object sender, System.EventArgs e)
 		{
@@ -160,7 +188,7 @@ namespace WhelpWizard
             {
                 await DisplayAlert("No name inserted!", "Please enter a name to save.", "Ok");
             }
-            else
+            else if (dogName.Text.Length != 0 && !editMode)
             {
                 dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
                 Notifications(picker.Date, dogName.Text);
@@ -170,7 +198,15 @@ namespace WhelpWizard
                 await DisplayAlert("Dam Saved", dogName.Text + " has been saved into your phone.", "Ok");
                 picker.Date = DateTime.Today;
                 dogName.Text = "";
-            }
+            } else {
+                //TODO: Need to cancel notifications!
+                dog.DogName = dogName.Text;
+                dog.BreedingDate = picker.Date;
+                await SaveAndLoad.OverwriteFile(dog);
+				await DisplayAlert("Dam Edited", "Your changes to " + dogName.Text + " have been saved into your phone.", "Ok");
+                damInfo.Setup(this.dog);
+                await Navigation.PopModalAsync(true);
+			}
         }
 
         public void Notifications(DateTime breedingDate, string name)

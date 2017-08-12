@@ -12,7 +12,7 @@ namespace WhelpWizard
     {
         ObservableCollection<Dog> dogs;
         ObservableCollection<Dog> dogsTemp;
-        int searchBarText = 0;
+        //int searchBarText = 0;
 
 		public ListOfDams(ObservableCollection<Dog> dogs)
         {
@@ -22,10 +22,15 @@ namespace WhelpWizard
             dogsTemp = new ObservableCollection<Dog>(dogs);
         }
 
-        public ListOfDams()
+        public ListOfDams(Dog currentDog)
         {
-            
+            damsList.BeginRefresh();
+            damsList.EndRefresh();
         }
+        //TODO: This needs to be initialized again when an edit is complete.
+
+        public ListOfDams()
+        {}
 
         public void addDog(Dog dog)
         {
@@ -48,6 +53,17 @@ namespace WhelpWizard
             }
         }
 
+        public void RefreshList()
+        {
+            damsList.ItemsSource = null;
+            damsList.ItemsSource = dogs;
+        }
+
+        void Handle_Appearing(object sender, System.EventArgs e)
+        {
+            RefreshList();
+        }
+
         void Handle_ItemSelected(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             //string dogName = ((Dog)e.Item).DogName; 
@@ -56,7 +72,6 @@ namespace WhelpWizard
             Navigation.PushAsync(new DamInformation(currentDog));
         }
 
-        //TODO: Make it so when you add a letter a remove loop runs and when you remove a letter an add loop runs.
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             try

@@ -17,34 +17,34 @@ namespace WhelpWizard
 
         public DamInformation(Dog currentDog)
         {
-            InitializeComponent();
+            Setup(currentDog);
+			ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleShareActionAsync, ToolbarItemOrder.Default));
+			ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => Navigation.PushModalAsync(new Calculator(currentDog, this)), ToolbarItemOrder.Default));
+        }
 
-            this.currentDog = currentDog;
-            this.dogName = currentDog.DogName;
-            this.breedingDate = currentDog.BreedingDate;
-            damName.Text = dogName;
-            pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
-            breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
-            DaysLeft();
-            stepperValue = getCurrentDate();
-            vacList = new VaccineList(currentDog);
+        public void Setup(Dog currentDog)
+        {
+			InitializeComponent();
+			this.currentDog = currentDog;
+			this.dogName = currentDog.DogName;
+			this.breedingDate = currentDog.BreedingDate;
+			damName.Text = dogName;
+			pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
+			breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
+			DaysLeft();
+			stepperValue = getCurrentDate();
+			vacList = new VaccineList(currentDog);
 
-            if (stepperValue == 1)
-            {
-                stepperLeft.IsEnabled = false;
-            } else if (stepperValue == 6)
-            {
-                stepperRight.IsEnabled = false;
-            }
-
-            ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleShareActionAsync, ToolbarItemOrder.Default));
-            ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => DisplayAlert("Clicked", "Clicked Share", "ok"), ToolbarItemOrder.Default));
+			if (stepperValue == 1)
+			{
+				stepperLeft.IsEnabled = false;
+			}
+			else if (stepperValue == 6)
+			{
+				stepperRight.IsEnabled = false;
+			}
 
 
-        
-			//stepper.Value = getCurrentDate();
-			//stepper.Minimum = 1;
-			//stepper.Maximum = 6;
         }
 
         public DamInformation() { }
