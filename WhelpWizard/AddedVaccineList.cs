@@ -5,10 +5,6 @@ namespace WhelpWizard
 {
     public class AddedVaccineList
     {
-        public static ObservableCollection<string> AddedVaccines = new ObservableCollection<string>();
-
-        public AddedVaccineList()
-        {
-        }
+        public static ObservableCollection<string> AddedVaccines;
     }
 }

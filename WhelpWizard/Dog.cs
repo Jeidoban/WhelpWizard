@@ -22,10 +22,11 @@ namespace WhelpWizard
         public int PlaceInList { get; set; }
         public ObservableCollection<Vaccine> vaccineList { get; set; }
         public int TotalVaccines { get; set; }
+        public int[] notificationIds { get; set; }
 
         public Dog(string dogName, DateTime breedingDate, int placeInList)
         {
-            //int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));
+            notificationIds = new int[6];
             this.DogName = dogName;
             this.BreedingDate = breedingDate;
             this.PlaceInList = placeInList;

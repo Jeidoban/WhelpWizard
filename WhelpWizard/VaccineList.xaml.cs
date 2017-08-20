@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Plugin.LocalNotifications;
 
 using Xamarin.Forms;
 
@@ -29,6 +30,17 @@ namespace WhelpWizard
             Navigation.PushModalAsync(new Vaccinations(currentDog, currentVaccine));
         }
 
+        void Handle_Appearing(object sender, System.EventArgs e)
+        {
+            RefreshList();
+        }
+
+        public void RefreshList()
+		{
+            vaccineListShow.ItemsSource = null;
+            vaccineListShow.ItemsSource = currentDog.vaccineList;
+		}
+
         void HandleAction()
         {
             Navigation.PushModalAsync(new Vaccinations(currentDog));
@@ -50,7 +62,11 @@ namespace WhelpWizard
 				}
                 //Almost there
 				currentDog.vaccineList.RemoveAt(index);
-                currentDog.TotalVaccines = currentDog.vaccineList.Count;
+                currentDog.TotalVaccines--;
+
+                if (getInfo.VaccineRemind != DateTime.MinValue)
+                    CrossLocalNotifications.Current.Cancel(getInfo.notificationId);
+                
                 SaveAndLoad.OverwriteFile(currentDog);
 			}
         }

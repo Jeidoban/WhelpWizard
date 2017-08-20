@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Plugin.LocalNotifications;
 
 using Xamarin.Forms;
 
@@ -22,11 +23,11 @@ namespace WhelpWizard
             dogsTemp = new ObservableCollection<Dog>(dogs);
         }
 
-        public ListOfDams(Dog currentDog)
-        {
-            damsList.BeginRefresh();
-            damsList.EndRefresh();
-        }
+        //public ListOfDams(Dog currentDog)
+        //{
+        //    damsList.BeginRefresh();
+        //    damsList.EndRefresh();
+        //}
         //TODO: This needs to be initialized again when an edit is complete.
 
         public ListOfDams()
@@ -50,6 +51,9 @@ namespace WhelpWizard
                 await SaveAndLoad.DeleteCell(dogs, index);
                 damsList.ItemsSource = dogs;
                 searchBar.Text = "";
+
+                for (int i = 0; i < getInfo.notificationIds.Length; i++)
+                    CrossLocalNotifications.Current.Cancel(getInfo.notificationIds[i] + i);
             }
         }
 

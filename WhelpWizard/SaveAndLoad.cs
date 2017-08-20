@@ -80,6 +80,14 @@ namespace WhelpWizard
             file.WriteAllTextAsync(notificationId.ToString());
         }
 
+		public static void SaveVaccineNotificationId()
+		{
+			notificationId++;
+			IFolder rootFolder = FileSystem.Current.LocalStorage;
+			IFile file = rootFolder.CreateFileAsync("notificationIdCounter", CreationCollisionOption.ReplaceExisting).Result;
+			file.WriteAllTextAsync(notificationId.ToString());
+		}
+
         public static void LoadNotificationId()
         {
             IFolder rootFolder = FileSystem.Current.LocalStorage;

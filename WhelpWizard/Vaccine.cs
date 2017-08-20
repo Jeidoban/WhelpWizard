@@ -23,6 +23,7 @@ namespace WhelpWizard
         public DateTime VaccineRemind { get; set; }
         public String Notes { get; set; }
         public int itemInList { set; get; }
+        public int notificationId { get; set; }
 
         public Vaccine()
         {

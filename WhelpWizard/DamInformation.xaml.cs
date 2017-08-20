@@ -43,8 +43,6 @@ namespace WhelpWizard
 			{
 				stepperRight.IsEnabled = false;
 			}
-
-
         }
 
         public DamInformation() { }

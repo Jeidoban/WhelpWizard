@@ -191,7 +191,7 @@ namespace WhelpWizard
             else if (dogName.Text.Length != 0 && !editMode)
             {
                 dog = new Dog(dogName.Text, picker.Date, SaveAndLoad.fileNumber);
-                Notifications(picker.Date, dogName.Text);
+                Notifications(picker.Date, dogName.Text, dog);
                 SaveAndLoad.SaveNotificationId();
 				list.addDog(dog);
                 await SaveAndLoad.WriteToFile(dog);
@@ -201,6 +201,12 @@ namespace WhelpWizard
             } else {
                 //TODO: Need to cancel notifications!
                 dog.DogName = dogName.Text;
+
+                if (dog.BreedingDate != picker.Date)
+                {
+                    Notifications(picker.Date, dogName.Text, dog);
+                }
+
                 dog.BreedingDate = picker.Date;
                 await SaveAndLoad.OverwriteFile(dog);
 				await DisplayAlert("Dam Edited", "Your changes to " + dogName.Text + " have been saved into your phone.", "Ok");
@@ -209,15 +215,25 @@ namespace WhelpWizard
 			}
         }
 
-        public void Notifications(DateTime breedingDate, string name)
+        //TODO: You need to think of a better way to do notifications. You need to be able to cancel them!
+        public void Notifications(DateTime breedingDate, string name, Dog dog)
         {
+            if (!editMode)
+            {
+                for (int i = 0; i < dog.notificationIds.Length; i++)
+                {
+                    dog.notificationIds[i] = SaveAndLoad.notificationId + i;
+                }
+            }
+
             var notif = CrossLocalNotifications.Current;
-            notif.Show("New Milestone Achieved", name + " has 47 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId, breedingDate.AddDays(15).AddHours(12));
-			notif.Show("New Milestone Achieved", name + " has 40 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 1, breedingDate.AddDays(22).AddHours(12));
-			notif.Show("New Milestone Achieved", name + " has 33 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 2, breedingDate.AddDays(29).AddHours(12));
-			notif.Show("New Milestone Achieved", name + " has 26 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 3, breedingDate.AddDays(36).AddHours(12));
-			notif.Show("New Milestone Achieved", name + " has 12 days until due! See what's happening with her pregnancy.", SaveAndLoad.notificationId + 4, breedingDate.AddDays(50).AddHours(12));
-            notif.Show(name + " is almost due!", name + " is due any day now.", SaveAndLoad.notificationId + 5, breedingDate.AddDays(61).AddHours(12));  
+            notif.Show("test", "test", dog.notificationIds[5] + 1, DateTime.Now);
+            notif.Show("New Milestone Achieved", name + " has 47 days until due! See what's happening with her pregnancy.", dog.notificationIds[0], breedingDate.AddDays(15).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 40 days until due! See what's happening with her pregnancy.", dog.notificationIds[1], breedingDate.AddDays(22).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 33 days until due! See what's happening with her pregnancy.", dog.notificationIds[2], breedingDate.AddDays(29).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 26 days until due! See what's happening with her pregnancy.", dog.notificationIds[3], breedingDate.AddDays(36).AddHours(12));
+			notif.Show("New Milestone Achieved", name + " has 12 days until due! See what's happening with her pregnancy.", dog.notificationIds[4], breedingDate.AddDays(50).AddHours(12));
+            notif.Show(name + " is almost due!", name + " is due any day now.", dog.notificationIds[5], breedingDate.AddDays(61).AddHours(12));
         }
     }
 }
