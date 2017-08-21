@@ -49,12 +49,26 @@ namespace WhelpWizard
 
         async void HandleShareActionAsync()
         {
-            //TODO: make this so it shares dog info.
-            var messageToSend = new Plugin.Share.Abstractions.ShareMessage
+
+            var decision = await DisplayAlert("Include milestones?", "Would you like to include the currently selected milestone?", "Yes", "No");
+            var messageToSend = new Plugin.Share.Abstractions.ShareMessage();
+            messageToSend.Title = "See what's happening with " + currentDog.DogName + "'s pregnancy.";
+
+            if (decision) 
             {
-                Title = "YAY",
-                Text = "WOO"
-            };
+                messageToSend.Text = currentDog.DogName + ":\n\n" +
+                     "Due: " + currentDog.BreedingDate.AddDays(63).ToString("ddd, MMM d, yyyy") + "\n" +
+                     "Bred: " + currentDog.BreedingDate.ToString("ddd, MMM d, yyyy") + "\n" +
+                     "Days until due: " + (currentDog.BreedingDate.AddDays(63) - DateTime.Today).Days + "\n\n" +
+                     "Selected milestone: " + pregDate.Text + ":\n" + pregInfo.Text;
+			} 
+            else 
+            {
+                messageToSend.Text = currentDog.DogName + ":\n\n" +
+                     "Due: " + currentDog.BreedingDate.AddDays(63).ToString("ddd, MMM d, yyyy") + "\n" +
+                     "Bred: " + currentDog.BreedingDate.ToString("ddd, MMM d, yyyy") + "\n" +
+                     "Days until due: " + (currentDog.BreedingDate.AddDays(63) - DateTime.Today).Days + "\n\n"; 
+			}
 
             await CrossShare.Current.Share(messageToSend);
         }

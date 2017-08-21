@@ -53,7 +53,7 @@ namespace WhelpWizard
                 searchBar.Text = "";
 
                 for (int i = 0; i < getInfo.notificationIds.Length; i++)
-                    CrossLocalNotifications.Current.Cancel(getInfo.notificationIds[i] + i);
+                    CrossLocalNotifications.Current.Cancel(getInfo.notificationIds[i]);
             }
         }
 

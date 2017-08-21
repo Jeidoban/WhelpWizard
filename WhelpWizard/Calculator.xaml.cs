@@ -227,7 +227,7 @@ namespace WhelpWizard
             }
 
             var notif = CrossLocalNotifications.Current;
-            notif.Show("test", "test", dog.notificationIds[5] + 1, DateTime.Now);
+            //notif.Show("test", "test", 1000, DateTime.Now.AddSeconds(10));
             notif.Show("New Milestone Achieved", name + " has 47 days until due! See what's happening with her pregnancy.", dog.notificationIds[0], breedingDate.AddDays(15).AddHours(12));
 			notif.Show("New Milestone Achieved", name + " has 40 days until due! See what's happening with her pregnancy.", dog.notificationIds[1], breedingDate.AddDays(22).AddHours(12));
 			notif.Show("New Milestone Achieved", name + " has 33 days until due! See what's happening with her pregnancy.", dog.notificationIds[2], breedingDate.AddDays(29).AddHours(12));

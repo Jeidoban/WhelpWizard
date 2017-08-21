@@ -72,6 +72,7 @@ namespace WhelpWizard
 
         void AddButtonClicked(object sender, System.EventArgs e)
         {
+            DateTime notifDateTemp = vac.VaccineRemind;
 
             if (hideElements.IsVisible)
             {
@@ -79,7 +80,7 @@ namespace WhelpWizard
             }
             else
                 vac.VaccineRemind = DateTime.MinValue;
-
+            
             vac.VaccineDate = picker.Date;
             vac.VaccineName = vaccineName.SelectedItem;
             vac.Notes = notes.Text;
@@ -91,26 +92,39 @@ namespace WhelpWizard
 				currentDog.TotalVaccines++;
 
                 if (hideElements.IsVisible)
+                {
 					CrossLocalNotifications.Current.Show("Reminder", "Reminder that " + vaccineName.SelectedItem + " for " +
-													 currentDog.DogName + " is due " + picker.Date.ToString("D") +
-													 ", which is in " + (picker.Date - pickerRemind.Date).Days +
-													 " days.", SaveAndLoad.notificationId, pickerRemind.Date.AddHours(12));
-                
-                vac.notificationId = SaveAndLoad.notificationId;
-                SaveAndLoad.SaveVaccineNotificationId();
+													currentDog.DogName + " is due " + picker.Date.ToString("D") +
+													", which is in " + (picker.Date - pickerRemind.Date).Days +
+														" days.", SaveAndLoad.notificationId, pickerRemind.Date.AddHours(12));
 
-            } else if (editMode && pickerRemind.Date != vac.VaccineRemind)
+					vac.notificationId = SaveAndLoad.notificationId;
+					SaveAndLoad.SaveVaccineNotificationId();
+                }
+                   
+
+            } else if (editMode && pickerRemind.Date != notifDateTemp)
             {
+                if (hideElements.IsVisible && notifDateTemp == DateTime.MinValue)
+                {
+					vac.notificationId = SaveAndLoad.notificationId;
+                    SaveAndLoad.SaveVaccineNotificationId();
+				}
+    
                 if (vac.VaccineRemind != DateTime.MinValue)
                 {
 					CrossLocalNotifications.Current.Show("Reminder", "Reminder that " + vaccineName.SelectedItem + " for " +
 													 currentDog.DogName + " is due " + picker.Date.ToString("D") +
 													 ", which is in " + (picker.Date - pickerRemind.Date).Days +
 													 " days.", vac.notificationId, pickerRemind.Date.AddHours(12));
-                } else {
-                    CrossLocalNotifications.Current.Cancel(vac.notificationId);
-                }
+                } 
             }
+
+            if (vac.VaccineRemind.Date == DateTime.MinValue && vac.notificationId != 0)
+            {
+				CrossLocalNotifications.Current.Cancel(vac.notificationId);
+			}
+
 			SaveAndLoad.OverwriteFile(currentDog);
             Navigation.PopModalAsync(true);
         }
