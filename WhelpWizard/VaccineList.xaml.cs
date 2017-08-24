@@ -16,7 +16,7 @@ namespace WhelpWizard
             InitializeComponent();
             this.currentDog = currentDog;
             vaccineListShow.ItemsSource = currentDog.vaccineList;
-            string plus = "+";
+            string plus = "Add";
             ToolbarItems.Add(new ToolbarItem(plus, null, HandleAction, ToolbarItemOrder.Default));
         }
 

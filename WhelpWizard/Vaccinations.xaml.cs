@@ -30,7 +30,6 @@ namespace WhelpWizard
 			pickerRemind.MaximumDate = picker.Date;
             pickerRemind.MinimumDate = DateTime.Today;
             picker.MinimumDate = DateTime.Today;
-
 		}
 
         public Vaccinations(Dog currentDog, Vaccine vac)
@@ -61,6 +60,7 @@ namespace WhelpWizard
             medsList.Add("medication 1");
             medsList.Add("medication 2");
             vaccineName.ItemsSource = medsList;
+            vaccineName.SelectedItem = medsList[0];
         }
          
         public Vaccinations() {}

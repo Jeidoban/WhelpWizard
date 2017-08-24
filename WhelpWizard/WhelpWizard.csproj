@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Vaccine.cs" />
     <Compile Include="AddedVaccineList.cs" />
+    <Compile Include="ButtonWithoutShadow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

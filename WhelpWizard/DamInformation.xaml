@@ -20,14 +20,14 @@
        <Label HorizontalOptions="Center" x:Name="pregInfo" LineBreakMode="WordWrap" FontSize="15"></Label>
         <StackLayout VerticalOptions="FillAndExpand"></StackLayout>
         <StackLayout Orientation="Horizontal">
-            <Button HorizontalOptions="StartAndExpand" Text="More" Margin="12, -10, -10, 20" BackgroundColor="#D9DCD6" WidthRequest="63" TextColor="#D9DCD6">
+            <!--<Button HorizontalOptions="StartAndExpand" Text="More" Margin="12, -10, -10, 20" BackgroundColor="#D9DCD6" WidthRequest="63" TextColor="#D9DCD6">
                 <Button.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
                         <OnPlatform.Android>Hind-Regular.ttf#Hind-Regular</OnPlatform.Android>
                     </OnPlatform>
                 </Button.FontFamily>
-            </Button>
-            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal" Margin="0, -10, 0, 20">
+            </Button>-->
+            <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Margin="15, -10, 0, 20">
                 <Button Text="← Prev" BackgroundColor="#61988E" TextColor="White" x:Name="stepperLeft" WidthRequest="80" Clicked="StepperPressedLeft" Margin="0, 0, -2, 0">
                     <Button.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">

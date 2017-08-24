@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.Vaccinations" BackgroundColor="#D9DCD6">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:local="clr-namespace:WhelpWizard;assembly=WhelpWizard" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhelpWizard.Vaccinations" BackgroundColor="#D9DCD6">
 	<ContentPage.Content>
         <StackLayout x:Name="stack">
-            <StackLayout Orientation="Horizontal" BackgroundColor="#61988E">
-                <Button Text="╳" HorizontalOptions="Start" FontAttributes="Bold" Margin="10, 20, 0, 0" TextColor="#D9DCD6" Clicked="Handle_Clicked"/>
-                <Label Text="Add Additional Information" HorizontalOptions="CenterAndExpand" TextColor="#D9DCD6" Margin="0, 30, -10, 0"></Label>
-                <StackLayout HorizontalOptions="EndAndExpand"></StackLayout>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#61988E" HeightRequest="65" Margin="0, -10, 0, 0">
+                <local:ButtonWithoutShadow Text="╳" HorizontalOptions="Start" FontSize="20" VerticalOptions="CenterAndExpand" BorderColor="Transparent" BackgroundColor="Transparent" FontAttributes="Bold" Margin="15, 30, 0, 0" TextColor="#D9DCD6" Clicked="Handle_Clicked"></local:ButtonWithoutShadow>
+                <Label Text="Vaccinations and Medications" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="#D9DCD6" Margin="-40, 30, 0, 0"></Label>        
             </StackLayout>
             <Label Text="Vaccine or medication name:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 10, 0 ,0"></Label>
-            <Picker BackgroundColor="#D9DCD6" x:Name="vaccineName" WidthRequest="275" HorizontalOptions="CenterAndExpand" SelectedIndexChanged="Handle_SelectedIndexChangedAsync"></Picker>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double" iOS="30" Android="45"/>
+                </StackLayout.HeightRequest>
+                <Button Text="-" HorizontalOptions="StartAndExpand" BackgroundColor="#61988E" TextColor="#D9DCD6" WidthRequest="40" FontSize="20" Margin="10, 0, 0, 0"></Button>
+                <Picker BackgroundColor="#D9DCD6" x:Name="vaccineName" HorizontalOptions="CenterAndExpand" WidthRequest="215" SelectedIndexChanged="Handle_SelectedIndexChangedAsync"></Picker>
+                <Button Text="+" HorizontalOptions="EndAndExpand" BackgroundColor="#61988E" TextColor="#D9DCD6" FontSize="20" WidthRequest="40" Margin="0, 0, 10, 0"></Button>
+            </StackLayout>
             <Label Text="Date of vaccine or medication:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0 ,0"></Label>
-
-            <DatePicker x:Name="picker" DateSelected="Handle_DateSelected" BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
+            <DatePicker x:Name="picker" DateSelected="Handle_DateSelected" BackgroundColor="#D9DCD6" WidthRequest="250" HorizontalOptions="CenterAndExpand"></DatePicker>
             <Label Text="Do you want to be reminded?" HorizontalOptions="CenterAndExpand" TextColor="#61988E"></Label>
             <Switch x:Name="switchForRemind" BackgroundColor="#D9DCD6" HorizontalOptions="CenterAndExpand" Toggled="Handle_Toggled"></Switch>
             <StackLayout HorizontalOptions="CenterAndExpand" x:Name="hideElements" IsVisible="false">
                 <Label Text="Date to be reminded:" TextColor="#61988E" HorizontalOptions="CenterAndExpand" Margin="0, 0, 0 ,0"></Label>
-                <DatePicker x:Name="pickerRemind" BackgroundColor="#D9DCD6" WidthRequest="275" HorizontalOptions="CenterAndExpand"></DatePicker>
+                <DatePicker x:Name="pickerRemind" BackgroundColor="#D9DCD6" WidthRequest="250" HorizontalOptions="CenterAndExpand"></DatePicker>
             </StackLayout>
             <StackLayout VerticalOptions="FillAndExpand">
                 <Label Text="Notes:" HorizontalOptions="CenterAndExpand" TextColor="#61988E"></Label>
