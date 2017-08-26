@@ -97,5 +97,24 @@ namespace WhelpWizard
                 notificationId = Int32.Parse(file.ReadAllTextAsync().Result);
 			}
         }
+
+        public static void SaveVaccines(ObservableCollection<string> list)
+        {
+			IFolder rootFolder = FileSystem.Current.LocalStorage;
+			IFile file = rootFolder.CreateFileAsync("addedVaccineList", CreationCollisionOption.ReplaceExisting).Result;
+            file.WriteAllTextAsync(JsonConvert.SerializeObject(list));
+        }
+
+        public static ObservableCollection<string> LoadVaccines()
+		{
+            ObservableCollection<string> list = new ObservableCollection<string>();
+			IFolder rootFolder = FileSystem.Current.LocalStorage;
+			if (rootFolder.CheckExistsAsync("addedVaccineList").Result == ExistenceCheckResult.FileExists) // while the file exists...
+			{
+				IFile file = rootFolder.GetFileAsync("addedVaccineList").Result; // get the file.
+                list = JsonConvert.DeserializeObject<ObservableCollection<string>>(file.ReadAllTextAsync().Result);
+			}
+            return list;
+		}
     }
 }

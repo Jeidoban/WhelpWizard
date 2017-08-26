@@ -2,8 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:local="clr-namespace:WhelpWizard;assembly=WhelpWizard" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Name="conPage" x:Class="WhelpWizard.Calculator" Title="Add a Dam" BackgroundColor="#D9DCD6">
 	<StackLayout Orientation="Vertical" Margin="0, 10, 0, 0" x:Name="stack" >
         <StackLayout Orientation="Horizontal" BackgroundColor="#61988E" x:Name="editBar" IsVisible="false" Margin="0, -10, 0, 0" HeightRequest="60">
-                <local:ButtonWithoutShadow Text="╳" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" FontSize="20" BorderColor="Transparent" BackgroundColor="Transparent" Margin="15,15,0,0" FontAttributes="Bold" TextColor="#D9DCD6" Clicked="Handle_Clicked"></local:ButtonWithoutShadow>
-                <Label Text="Edit a Dam" HorizontalOptions="CenterAndExpand" FontSize="16" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand" TextColor="#D9DCD6" Margin="-40, 15, 0 ,0"></Label>
+                <local:ButtonWithoutShadow Text="╳" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" FontSize="20" BorderColor="Transparent" BackgroundColor="Transparent" FontAttributes="Bold" TextColor="#D9DCD6" Clicked="Handle_Clicked">
+                    <local:ButtonWithoutShadow.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="15, 15, 0 ,0" />
+                            <On Platform="Android" Value="5, 10, 0, 0" />             
+                        </OnPlatform>
+                    </local:ButtonWithoutShadow.Margin>
+                </local:ButtonWithoutShadow>
+                <Label Text="Edit a Dam" HorizontalOptions="CenterAndExpand" FontSize="16" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand" TextColor="#D9DCD6">
+                    <Label.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="-40, 15, 0 ,0" />
+                            <On Platform="Android" Value="-100, 15, 0, 0" />             
+                        </OnPlatform>
+                    </Label.Margin>
+                </Label>
             </StackLayout>
         <StackLayout Orientation="Horizontal">
             <StackLayout Orientation="Vertical" HorizontalOptions="Start" Margin="10, 0, 0, 0">
