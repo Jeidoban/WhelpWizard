@@ -169,6 +169,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="UserNotificationCenterDelegate.cs" />
+    <Compile Include="ButtonWithoutShadowRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ShareSymbolXam.png" />

@@ -194,12 +194,14 @@ namespace WhelpWizard
         public void DaysLeft()
         {
             int daysLeft = CalculateDate.DaysSubtracted(CalculateDate.NumberOfDays(breedingDate, 63));
-			if (daysLeft > 1)
+            if (daysLeft > 1)
                 daysLeftLabel.Text = daysLeft + " days until due";
-			else if (daysLeft == 0)
+            else if (daysLeft == 0)
                 daysLeftLabel.Text = "Due today";
-			else if (daysLeft < 0)
+            else if (daysLeft < -1)
                 daysLeftLabel.Text = "Was due " + Math.Abs(daysLeft) + " days ago";
+            else if (daysLeft == -1)
+                daysLeftLabel.Text = "Was due " + Math.Abs(daysLeft) + " day ago";
             else if (daysLeft == 1)
                 daysLeftLabel.Text = daysLeft + " day until due";
         }
