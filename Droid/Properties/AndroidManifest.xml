@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.breederzoo.whelp_wizard">
 	<uses-sdk android:minSdkVersion="15" />
-	<application android:label="Whelp Wizard">
-	</application>
+	<application android:label="Whelp Wizard" android:icon="@drawable/whelpwizardlogo1024"></application>
 </manifest>

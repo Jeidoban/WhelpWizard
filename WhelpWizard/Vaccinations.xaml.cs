@@ -17,8 +17,7 @@ namespace WhelpWizard
         Dog currentDog; // Passed in from where this class is called from.
         bool editMode; // This decides if this class was triggered but clicking a new vaccine, or editing an existing one. This is why there are two constructors.
         Vaccine vac; // The vaccine object.
-        string defaultMed1 = "medication 1";
-        string defaultMed2 = "medication 2";
+        List<string> defaultMeds;
         ObservableCollection<string> medsList;
 
 
@@ -64,8 +63,13 @@ namespace WhelpWizard
         void SetMeds()
         {
             medsList = SaveAndLoad.LoadVaccines();
-            medsList.Add(defaultMed1);
-            medsList.Add(defaultMed2);
+            defaultMeds = new List<string>();
+            defaultMeds.Add("Rabies vaccine");
+            defaultMeds.Add("Flea TX");
+            defaultMeds.Add("Heartworm TX");
+            defaultMeds.Add("Dewormer");
+            AddDefaultMeds();
+
             vaccineName.ItemsSource = medsList;
         }
 
@@ -74,8 +78,7 @@ namespace WhelpWizard
         void Handle_Clicked(object sender, System.EventArgs e)
         {
             Navigation.PopModalAsync(true);
-            medsList.Remove(defaultMed1);
-            medsList.Remove(defaultMed2);
+            DeleteDefaultMeds();
         }
 
         void AddButtonClicked(object sender, System.EventArgs e)
@@ -134,9 +137,7 @@ namespace WhelpWizard
                 CrossLocalNotifications.Current.Cancel(vac.notificationId);
             }
 
-            medsList.Remove(defaultMed1);
-            medsList.Remove(defaultMed2);
-
+            DeleteDefaultMeds();
             SaveAndLoad.OverwriteFile(currentDog);
             Navigation.PopModalAsync(true);
         }
@@ -149,6 +150,29 @@ namespace WhelpWizard
                 hideElements.IsVisible = false;
         }
 
+        bool CompareDefaultMeds(string tested)
+        {
+            foreach (string med in defaultMeds)
+            {
+                if (tested.ToLower() == med.ToLower())
+                    return true;
+            }
+
+            return false;
+        }
+
+        void DeleteDefaultMeds()
+        {
+			foreach (string med in defaultMeds)
+                medsList.Remove(med);
+        }
+
+        void AddDefaultMeds()
+        {
+			foreach (string med in defaultMeds)
+				medsList.Add(med);
+        }
+
         void PlusButtonClicked(object sender, EventArgs e)
         {
             UserDialogs.Instance.Prompt(new PromptConfig
@@ -158,23 +182,21 @@ namespace WhelpWizard
                 {
                     if (obj.Ok)
                     {
-                        if (obj.Text.Length != 0 && obj.Text.ToLower() != defaultMed1.ToLower() && obj.Text.ToLower() != defaultMed2.ToLower())
+                        if (obj.Text.Length != 0 && !CompareDefaultMeds(obj.Text))
                         {
-                            medsList.Remove(defaultMed1);
-                            medsList.Remove(defaultMed2);
+                            DeleteDefaultMeds();
                             medsList.Insert(0, obj.Text);
                             SaveAndLoad.SaveVaccines(medsList);
-                            medsList.Add(defaultMed1);
-                            medsList.Add(defaultMed2);
+                            AddDefaultMeds();
                             vaccineName.SelectedItem = medsList[0];
                         }
-                        else if (obj.Text.ToLower() == defaultMed1.ToLower() || obj.Text.ToLower() == defaultMed2.ToLower())
+                        else if (CompareDefaultMeds(obj.Text))
                         {
-                            DisplayAlert("Invalid name", "Default vaccines can't be re-entered.", "Ok");
+                            DisplayAlert("Invalid name", "Default vaccines and medications can't be re-entered.", "Ok");
                         }
                         else
                         {
-                            DisplayAlert("Invalid name", "Text box needs to be filled.", "Ok");
+                            DisplayAlert("Invalid name", "Field can't be empty.", "Ok");
                         }
                     }
                 })
@@ -183,18 +205,16 @@ namespace WhelpWizard
 
         async void MinusButtonClicked(object sender, EventArgs e)
         {
-            if (vaccineName.SelectedItem.ToString() != defaultMed1 && vaccineName.SelectedItem.ToString() != defaultMed2)
+            if (!CompareDefaultMeds(vaccineName.SelectedItem.ToString()))
             {
                 var result = await DisplayActionSheet("Are you sure you want to delete " + vaccineName.SelectedItem + "?", "Cancel", "Delete");
 
                 if (result == "Delete")
                 {
-					medsList.Remove(defaultMed1);
-					medsList.Remove(defaultMed2);
+                    DeleteDefaultMeds();
                     medsList.Remove(vaccineName.SelectedItem.ToString());
                     SaveAndLoad.SaveVaccines(medsList);
-					medsList.Add(defaultMed1);
-					medsList.Add(defaultMed2);
+                    AddDefaultMeds();
                     vaccineName.SelectedItem = medsList[0];
                 }
             }

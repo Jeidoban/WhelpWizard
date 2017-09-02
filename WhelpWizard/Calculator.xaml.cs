@@ -199,7 +199,6 @@ namespace WhelpWizard
                 picker.Date = DateTime.Today;
                 dogName.Text = "";
             } else {
-                //TODO: Need to cancel notifications!
                 dog.DogName = dogName.Text;
 
                 if (dog.BreedingDate != picker.Date)

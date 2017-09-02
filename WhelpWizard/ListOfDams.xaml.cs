@@ -13,22 +13,18 @@ namespace WhelpWizard
     {
         ObservableCollection<Dog> dogs;
         ObservableCollection<Dog> dogsTemp;
-        //int searchBarText = 0;
 
 		public ListOfDams(ObservableCollection<Dog> dogs)
         {
             InitializeComponent();
+
+			if (Device.RuntimePlatform == Device.Android)
+                searchBar.HeightRequest = 40.0;
+
             this.dogs = dogs;
             damsList.ItemsSource = dogs; // IMPORTANT! The listview in the XAML has to be connected to an Observable list
             dogsTemp = new ObservableCollection<Dog>(dogs);
         }
-
-        //public ListOfDams(Dog currentDog)
-        //{
-        //    damsList.BeginRefresh();
-        //    damsList.EndRefresh();
-        //}
-        //TODO: This needs to be initialized again when an edit is complete.
 
         public ListOfDams()
         {}

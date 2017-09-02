@@ -20,7 +20,6 @@ namespace WhelpWizard
 			dogList = new ObservableCollection<Dog>(); // This needs to be initialized on app startup, regardless on what page it starts on.
 			list = new ListOfDams(PopulateList(dogList));
             calc = new Calculator(list);
-
         }
 
         void GoToCalculator(object sender, System.EventArgs e)

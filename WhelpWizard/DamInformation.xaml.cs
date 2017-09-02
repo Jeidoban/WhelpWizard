@@ -18,68 +18,55 @@ namespace WhelpWizard
         public DamInformation(Dog currentDog)
         {
             Setup(currentDog);
-			ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleShareActionAsync, ToolbarItemOrder.Default));
-			ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => Navigation.PushModalAsync(new Calculator(currentDog, this)), ToolbarItemOrder.Default));
+            ToolbarItems.Add(new ToolbarItem("", "ShareSymbolXam.png", HandleShareActionAsync, ToolbarItemOrder.Default));
+            ToolbarItems.Add(new ToolbarItem("", "EditSymbolXam.png", () => Navigation.PushModalAsync(new Calculator(currentDog, this)), ToolbarItemOrder.Default));
         }
 
         public void Setup(Dog currentDog)
         {
-			InitializeComponent();
-			this.currentDog = currentDog;
-			this.dogName = currentDog.DogName;
-			this.breedingDate = currentDog.BreedingDate;
-			damName.Text = dogName;
-			pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
-			breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
-			DaysLeft();
-			stepperValue = getCurrentDate();
-			vacList = new VaccineList(currentDog);
+            InitializeComponent();
+            this.currentDog = currentDog;
+            this.dogName = currentDog.DogName;
+            this.breedingDate = currentDog.BreedingDate;
+            damName.Text = dogName;
+            pregDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 63);
+            breedingDateLabel.Text = CalculateDate.NumberOfDays(breedingDate, 0);
+            DaysLeft();
+            stepperValue = getCurrentDate();
+            vacList = new VaccineList(currentDog);
 
-			if (stepperValue == 1)
-			{
-				stepperLeft.IsEnabled = false;
-			}
-			else if (stepperValue == 6)
-			{
-				stepperRight.IsEnabled = false;
-			}
+            if (stepperValue == 1)
+            {
+                stepperLeft.IsEnabled = false;
+            }
+            else if (stepperValue == 6)
+            {
+                stepperRight.IsEnabled = false;
+            }
         }
 
         public DamInformation() { }
 
         async void HandleShareActionAsync()
         {
-
-            var decision = await DisplayAlert("Include milestones?", "Would you like to include the currently selected milestone?", "Yes", "No");
-            var messageToSend = new Plugin.Share.Abstractions.ShareMessage();
-            messageToSend.Title = "See what's happening with " + currentDog.DogName + "'s pregnancy.";
-
-            if (decision) 
-            {
-                messageToSend.Text = currentDog.DogName + ":\n\n" +
-                     "Due: " + currentDog.BreedingDate.AddDays(63).ToString("ddd, MMM d, yyyy") + "\n" +
-                     "Bred: " + currentDog.BreedingDate.ToString("ddd, MMM d, yyyy") + "\n" +
-                     "Days until due: " + (currentDog.BreedingDate.AddDays(63) - DateTime.Today).Days + "\n\n" +
-                     "Selected milestone: " + pregDate.Text + ":\n" + pregInfo.Text;
-			} 
-            else 
-            {
-                messageToSend.Text = currentDog.DogName + ":\n\n" +
-                     "Due: " + currentDog.BreedingDate.AddDays(63).ToString("ddd, MMM d, yyyy") + "\n" +
-                     "Bred: " + currentDog.BreedingDate.ToString("ddd, MMM d, yyyy") + "\n" +
-                     "Days until due: " + (currentDog.BreedingDate.AddDays(63) - DateTime.Today).Days + "\n\n"; 
-			}
-
-            await CrossShare.Current.Share(messageToSend);
+			await CrossShare.Current.Share(new Plugin.Share.Abstractions.ShareMessage
+			{
+				Title = "See what's happening with " + currentDog.DogName + "'s pregnancy.",
+				Text = currentDog.DogName + ":\n\n" +
+				  "Due: " + currentDog.BreedingDate.AddDays(63).ToString("ddd, MMM d, yyyy") + "\n" +
+				  "Bred: " + currentDog.BreedingDate.ToString("ddd, MMM d, yyyy") + "\n" +
+				  "Days until due: " + (currentDog.BreedingDate.AddDays(62) - DateTime.Today).Days + "\n\n" +
+				  "Selected milestone: " + pregDate.Text + ":\n" + pregInfo.Text
+			});
         }
 
-		async void GoToMoreAsync(object sender, System.EventArgs e)
-		{
+        async void GoToMoreAsync(object sender, System.EventArgs e)
+        {
             await Navigation.PushAsync(vacList);
-		}
+        }
 
         //This works the same way as the one in the calculator class.
-        public void PregnancyCases() 
+        public void PregnancyCases()
         {
             switch (stepperValue)
             {
@@ -110,41 +97,41 @@ namespace WhelpWizard
             }
         }
 
-		void StepperPressedLeft(object sender, System.EventArgs e)
-		{
-			stepperValue--;
+        void StepperPressedLeft(object sender, System.EventArgs e)
+        {
+            stepperValue--;
 
-			if (stepperValue == 1)
-			{
-				stepperLeft.IsEnabled = false;
-				stepperRight.IsEnabled = true;
-			}
-			else
-			{
-				stepperLeft.IsEnabled = true;
-				stepperRight.IsEnabled = true;
-			}
+            if (stepperValue == 1)
+            {
+                stepperLeft.IsEnabled = false;
+                stepperRight.IsEnabled = true;
+            }
+            else
+            {
+                stepperLeft.IsEnabled = true;
+                stepperRight.IsEnabled = true;
+            }
 
-			PregnancyCases();
-		}
+            PregnancyCases();
+        }
 
-		void StepperPressedRight(object sender, System.EventArgs e)
-		{
-			stepperValue++;
+        void StepperPressedRight(object sender, System.EventArgs e)
+        {
+            stepperValue++;
 
-			if (stepperValue == 6)
-			{
-				stepperRight.IsEnabled = false;
-				stepperLeft.IsEnabled = true;
-			}
-			else
-			{
-				stepperRight.IsEnabled = true;
-				stepperLeft.IsEnabled = true;
-			}
+            if (stepperValue == 6)
+            {
+                stepperRight.IsEnabled = false;
+                stepperLeft.IsEnabled = true;
+            }
+            else
+            {
+                stepperRight.IsEnabled = true;
+                stepperLeft.IsEnabled = true;
+            }
 
-			PregnancyCases();
-		}
+            PregnancyCases();
+        }
 
         // Same as the one above, except will take today's date and display the correct stage of pregnancy the dog is in when this
         // view is triggered.
@@ -153,39 +140,45 @@ namespace WhelpWizard
             int stepperSet = 0;
             if (DateTime.Today >= breedingDate.AddDays(0d) && DateTime.Today <= breedingDate.AddDays(14d))
             {
-				pregInfo.Text = PregnancyInfo.firstStage;
-				pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14d);
+                pregInfo.Text = PregnancyInfo.firstStage;
+                pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14d);
                 stepperSet = 1;
-            } else if (DateTime.Today >= breedingDate.AddDays(15d) && DateTime.Today <= breedingDate.AddDays(21d))
+            }
+            else if (DateTime.Today >= breedingDate.AddDays(15d) && DateTime.Today <= breedingDate.AddDays(21d))
             {
-				pregInfo.Text = PregnancyInfo.secondStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 15d) + " - " + CalculateDate.NumberOfDays(breedingDate, 21d);
+                pregInfo.Text = PregnancyInfo.secondStage;
+                pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 15d) + " - " + CalculateDate.NumberOfDays(breedingDate, 21d);
                 stepperSet = 2;
-			} else if (DateTime.Today >= breedingDate.AddDays(22d) && DateTime.Today <=breedingDate.AddDays(28d))
-			{
-                pregInfo.Text = PregnancyInfo.thirdStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 22d) + " - " + CalculateDate.NumberOfDays(breedingDate, 28d);
-                stepperSet = 3;
-			} else if (DateTime.Today >= breedingDate.AddDays(29d) && DateTime.Today <= breedingDate.AddDays(35d))
-			{
-                pregInfo.Text = PregnancyInfo.fourthStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 29d) + " - " + CalculateDate.NumberOfDays(breedingDate, 35d);
-                stepperSet = 4;
-			} else if (DateTime.Today >= breedingDate.AddDays(36d) && DateTime.Today <= breedingDate.AddDays(49d))
-			{
-                pregInfo.Text = PregnancyInfo.fifthStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 36d) + " - " + CalculateDate.NumberOfDays(breedingDate, 49d);
-                stepperSet = 5;
-			} else if (DateTime.Today >= breedingDate.AddDays(50d) && DateTime.Today <= breedingDate.AddDays(63d))
-			{
-                pregInfo.Text = PregnancyInfo.sixthStage;
-				pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 50d) + " - " + CalculateDate.NumberOfDays(breedingDate, 63d);
-                stepperSet = 6;
-			} else 
+            }
+            else if (DateTime.Today >= breedingDate.AddDays(22d) && DateTime.Today <= breedingDate.AddDays(28d))
             {
-				pregInfo.Text = PregnancyInfo.firstStage;
-				pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14d);
-				stepperSet = 1;
+                pregInfo.Text = PregnancyInfo.thirdStage;
+                pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 22d) + " - " + CalculateDate.NumberOfDays(breedingDate, 28d);
+                stepperSet = 3;
+            }
+            else if (DateTime.Today >= breedingDate.AddDays(29d) && DateTime.Today <= breedingDate.AddDays(35d))
+            {
+                pregInfo.Text = PregnancyInfo.fourthStage;
+                pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 29d) + " - " + CalculateDate.NumberOfDays(breedingDate, 35d);
+                stepperSet = 4;
+            }
+            else if (DateTime.Today >= breedingDate.AddDays(36d) && DateTime.Today <= breedingDate.AddDays(49d))
+            {
+                pregInfo.Text = PregnancyInfo.fifthStage;
+                pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 36d) + " - " + CalculateDate.NumberOfDays(breedingDate, 49d);
+                stepperSet = 5;
+            }
+            else if (DateTime.Today >= breedingDate.AddDays(50d) && DateTime.Today <= breedingDate.AddDays(63d))
+            {
+                pregInfo.Text = PregnancyInfo.sixthStage;
+                pregDate.Text = CalculateDate.NumberOfDays(breedingDate, 50d) + " - " + CalculateDate.NumberOfDays(breedingDate, 63d);
+                stepperSet = 6;
+            }
+            else
+            {
+                pregInfo.Text = PregnancyInfo.firstStage;
+                pregDate.Text = breedingDate.ToString("ddd, MMM d, yyyy") + " - " + CalculateDate.NumberOfDays(breedingDate, 14d);
+                stepperSet = 1;
             }
             return stepperSet;
         }
